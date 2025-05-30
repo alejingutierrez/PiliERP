@@ -61,9 +61,9 @@ These currently return placeholder data.
 ## Frontend Structure
 
 The frontend follows Atomic Design principles:
-- `src/atoms`: Basic UI elements.
-- `src/molecules`: Combinations of atoms.
-- `src/organisms`: Complex UI components.
-- `src/templates`: Common page layouts (e.g. `Page`).
-- `src/pages`: Concrete pages built from templates and molecules.
-- `src/components`: Shared layout components.
+ - `src/atoms`: Basic UI elements (buttons, inputs, `AppCard`).
+ - `src/molecules`: Combinations of atoms.
+ - `src/organisms`: Complex UI components.
+ - `src/templates`: Common page layouts, such as `Page`, that leverage `AppCard` for consistent surfaces.
+ - `src/pages`: Concrete pages built from templates and molecules.
+ - `src/components`: Shared layout components.
