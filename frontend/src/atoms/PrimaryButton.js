@@ -9,10 +9,6 @@ const PrimaryButton = ({ children, ...props }) => (
     {...props}
     sx={{
       // borderRadius removed to inherit from MuiButton styleOverrides in theme
-      textTransform: 'none',
-      fontWeight: 600,
-      height: 36,
-      px: '16px',
       ...props.sx,
     }}
   >

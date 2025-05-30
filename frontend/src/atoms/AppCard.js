@@ -6,7 +6,7 @@ const AppCard = ({ children, sx = {}, ...props }) => (
     elevation={1}
     {...props}
     sx={{
-      p: 2.5,
+      p: 4,
       backgroundColor: 'background.paper',
       // borderRadius, border, and boxShadow removed to inherit from theme
       ...sx,

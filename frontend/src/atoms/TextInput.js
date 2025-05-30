@@ -7,22 +7,7 @@ const TextInput = ({ ...props }) => (
     size="small"
     {...props}
     sx={{
-      '& .MuiOutlinedInput-root': {
-        height: 36,
-        // borderRadius removed to inherit from MuiTextField styleOverrides in theme
-        backgroundColor: 'background.paper',
-        '& fieldset': {
-          borderColor: '#C4C4C4',
-        },
-        '&.Mui-focused fieldset': {
-          borderColor: '#5C6AC4',
-          borderWidth: 2,
-        },
-      },
-      '& input::placeholder': {
-        color: '#979797',
-        opacity: 1,
-      },
+      // borderRadius removed to inherit from MuiTextField styleOverrides in theme
       ...props.sx,
     }}
   />

@@ -48,11 +48,11 @@ const Layout = ({ children }) => {
           backgroundColor: theme.palette.background.header,
           color: theme.palette.text.primary,
           borderBottom: `1px solid ${theme.palette.divider}`,
-          minHeight: 44,
+          minHeight: 56,
         })}
         elevation={1}
       >
-        <Toolbar sx={{ minHeight: 44, px: 2 }}>
+        <Toolbar sx={{ minHeight: 56, px: 2 }}>
           {isOverlay && (
             <IconButton
               color="inherit"
@@ -63,7 +63,7 @@ const Layout = ({ children }) => {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" noWrap component="div" sx={{ fontWeight: 600, fontSize: 14 }}>
+          <Typography variant="subtitle1" noWrap component="div" sx={{ fontWeight: 600, fontSize: 14 }}>
             ERP Dashboard
           </Typography>
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>

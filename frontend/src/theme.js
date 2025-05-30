@@ -41,11 +41,19 @@ const theme = createTheme({
     fontSize: 14,
     h1: {
       fontWeight: 600,
-      fontSize: '1.5rem',
+      fontSize: '1.75rem',
     },
     h2: {
       fontWeight: 600,
       fontSize: '1.25rem',
+    },
+    h3: {
+      fontWeight: 600,
+      fontSize: '1.125rem',
+    },
+    h4: {
+      fontWeight: 600,
+      fontSize: '1rem',
     },
     subtitle1: {
       fontSize: '1rem',
@@ -119,9 +127,9 @@ const theme = createTheme({
     MuiListItemButton: {
       styleOverrides: {
         root: {
-          height: 32,
-          paddingLeft: 2,
-          paddingRight: 2,
+          height: 40,
+          paddingLeft: 3,
+          paddingRight: 3,
           '&.Mui-selected': {
             backgroundColor: '#F4F6F8',
             borderLeft: '2px solid #5C6AC4',

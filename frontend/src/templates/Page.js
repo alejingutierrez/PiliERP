@@ -4,7 +4,7 @@ import AppCard from '../atoms/AppCard';
 
 const Page = ({ title, actions, children }) => (
   <Box>
-    <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
+    <Typography variant="h1" component="h1" gutterBottom sx={{ mb: 3 }}>
       {title}
     </Typography>
     <AppCard>
