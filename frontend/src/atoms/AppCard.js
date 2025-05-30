@@ -6,8 +6,8 @@ const AppCard = ({ children, sx = {}, ...props }) => (
     elevation={0}
     {...props}
     sx={{
-      p: 3,
-      borderRadius: 3,
+      p: 5,
+      borderRadius: 8,
       backgroundColor: 'background.paper',
       border: (theme) => `1px solid ${theme.palette.divider}`,
       boxShadow: (theme) => theme.shadows[1],

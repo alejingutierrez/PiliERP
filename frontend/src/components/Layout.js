@@ -1,19 +1,38 @@
 import React, { useState } from 'react';
-import { AppBar, Drawer, Toolbar, Typography, List, ListItem, ListItemIcon, ListItemText, Box, ListItemButton, IconButton, useMediaQuery } from '@mui/material';
+import {
+  AppBar,
+  Drawer,
+  Toolbar,
+  Typography,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Box,
+  ListItemButton,
+  IconButton,
+  useMediaQuery,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import SearchIcon from '@mui/icons-material/Search';
+import Avatar from '@mui/material/Avatar';
 import AppTooltip from '../atoms/AppTooltip';
-import StorefrontIcon from '@mui/icons-material/Storefront';
-import PeopleIcon from '@mui/icons-material/People';
-import PersonIcon from '@mui/icons-material/Person';
+import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import HeaderSearchBar from '../molecules/HeaderSearchBar';
 import { Link, useLocation } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const isOverlay = useMediaQuery('(max-width:768px)');
+  const isCollapsed = useMediaQuery('(max-width:1024px)');
   const [mobileOpen, setMobileOpen] = useState(false);
-  const currentDrawerWidth = isMobile ? 200 : drawerWidth;
+  const currentDrawerWidth = isCollapsed ? 72 : drawerWidth;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -24,17 +43,17 @@ const Layout = ({ children }) => {
       {/* CssBaseline is now in App.js, applied globally */}
       <AppBar
         position="fixed"
-        sx={(theme) => ({
-          zIndex: theme.zIndex.drawer + 1,
-          backgroundColor: theme.palette.background.paper,
-          color: theme.palette.text.primary,
-          boxShadow: '0 1px 0 rgba(0,0,0,0.05)',
+        sx={{
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: '#1C1C1D',
+          color: '#FFFFFF',
+          borderBottom: '1px solid rgba(0,0,0,0.1)',
           minHeight: 56,
-        })}
+        }}
         elevation={0}
       >
-        <Toolbar sx={{ minHeight: 56, display: 'flex', justifyContent: 'space-between' }}>
-          {isMobile && (
+        <Toolbar sx={{ minHeight: 56, px: 2, display: 'flex', justifyContent: 'space-between' }}>
+          {isOverlay && (
             <IconButton
               color="inherit"
               edge="start"
@@ -44,18 +63,32 @@ const Layout = ({ children }) => {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" noWrap component="div">
-            ERP Dashboard
-          </Typography>
-          <Box>
-            {/* Global actions placeholder */}
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography variant="h6" noWrap component="div" sx={{ mr: 2 }}>
+              ERP Dashboard
+            </Typography>
+            {!isCollapsed && <HeaderSearchBar sx={{ mr: 2 }} />}
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            {isCollapsed && (
+              <IconButton color="inherit" sx={{ ml: 1 }}>
+                <SearchIcon />
+              </IconButton>
+            )}
+            <IconButton color="inherit" sx={{ ml: 1 }}>
+              <MailOutlineIcon />
+            </IconButton>
+            <IconButton color="inherit" sx={{ ml: 1 }}>
+              <NotificationsNoneIcon />
+            </IconButton>
+            <Avatar sx={{ ml: 1, width: 32, height: 32 }}>A</Avatar>
           </Box>
         </Toolbar>
       </AppBar>
       <Drawer
-        variant={isMobile ? 'temporary' : 'persistent'}
+        variant={isOverlay ? 'temporary' : 'persistent'}
         anchor="left"
-        open={isMobile ? mobileOpen : true}
+        open={isOverlay ? mobileOpen : true}
         onClose={handleDrawerToggle}
         sx={(theme) => ({
           width: currentDrawerWidth,
@@ -74,7 +107,7 @@ const Layout = ({ children }) => {
             <ListItem disablePadding component={Link} to="/tiendas" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <AppTooltip title="Tiendas" placement="right">
               <ListItemButton
-                onClick={isMobile ? handleDrawerToggle : undefined}
+                onClick={isOverlay ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/tiendas'}
                 sx={(theme) => ({
                   '&:hover': { backgroundColor: theme.palette.action.hover },
@@ -84,9 +117,9 @@ const Layout = ({ children }) => {
                   },
                 })}
               >
-                <ListItemIcon sx={{ color: location.pathname === '/tiendas' ? 'primary.main' : 'text.secondary' }}>
-                  <StorefrontIcon />
-                </ListItemIcon>
+              <ListItemIcon sx={{ color: location.pathname === '/tiendas' ? 'primary.main' : 'text.secondary' }}>
+                  <StorefrontOutlinedIcon />
+              </ListItemIcon>
                 <ListItemText primary="Tiendas" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
               </AppTooltip>
@@ -94,7 +127,7 @@ const Layout = ({ children }) => {
             <ListItem disablePadding component={Link} to="/usuarios" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <AppTooltip title="Usuarios" placement="right">
               <ListItemButton
-                onClick={isMobile ? handleDrawerToggle : undefined}
+                onClick={isOverlay ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/usuarios'}
                 sx={(theme) => ({
                   '&:hover': { backgroundColor: theme.palette.action.hover },
@@ -105,7 +138,7 @@ const Layout = ({ children }) => {
                 })}
               >
                 <ListItemIcon sx={{ color: location.pathname === '/usuarios' ? 'primary.main' : 'text.secondary' }}>
-                  <PeopleIcon />
+                  <PeopleOutlineIcon />
                 </ListItemIcon>
                 <ListItemText primary="Usuarios" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
@@ -114,7 +147,7 @@ const Layout = ({ children }) => {
             <ListItem disablePadding component={Link} to="/clientes" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <AppTooltip title="Clientes" placement="right">
               <ListItemButton
-                onClick={isMobile ? handleDrawerToggle : undefined}
+                onClick={isOverlay ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/clientes'}
                 sx={(theme) => ({
                   '&:hover': { backgroundColor: theme.palette.action.hover },
@@ -125,7 +158,7 @@ const Layout = ({ children }) => {
                 })}
               >
                 <ListItemIcon sx={{ color: location.pathname === '/clientes' ? 'primary.main' : 'text.secondary' }}>
-                  <PersonIcon />
+                  <PersonOutlineIcon />
                 </ListItemIcon>
                 <ListItemText primary="Clientes" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
@@ -140,8 +173,10 @@ const Layout = ({ children }) => {
           flexGrow: 1,
           bgcolor: theme.palette.background.default,
           pt: 3,
-          pb: 3,
-          px: { xs: 2, sm: 3, md: '10%' },
+          pb: 8,
+          px: 4,
+          maxWidth: 1440,
+          mx: 'auto',
           animation: 'fadeIn 0.5s ease-in-out',
         })}
       >

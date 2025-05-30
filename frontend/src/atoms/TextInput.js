@@ -8,7 +8,7 @@ const TextInput = ({ ...props }) => (
     {...props}
     sx={{
       '& .MuiOutlinedInput-root': {
-        borderRadius: 3,
+        borderRadius: 4,
         backgroundColor: 'background.paper',
       },
       ...props.sx,
