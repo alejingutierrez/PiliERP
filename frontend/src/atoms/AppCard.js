@@ -6,11 +6,11 @@ const AppCard = ({ children, sx = {}, ...props }) => (
     elevation={0}
     {...props}
     sx={{
-      p: 5,
+      p: 3,
       borderRadius: 8,
       backgroundColor: 'background.paper',
-      border: (theme) => `1px solid ${theme.palette.divider}`,
-      boxShadow: (theme) => theme.shadows[1],
+      border: '1px solid #E0E0E0',
+      boxShadow: '0 0 0 1px rgba(0,0,0,0.05)',
       ...sx,
     }}
   >

@@ -5,16 +5,22 @@ const theme = createTheme({
     primary: {
       main: '#008060',
     },
+    secondary: {
+      main: '#2C6ECB',
+    },
     background: {
       default: '#F6F6F7',
       paper: '#FFFFFF',
+      header: '#1C1C1C',
+      sidebar: '#FFFFFF',
     },
     text: {
       primary: '#202223',
       secondary: '#4C4D4F',
       disabled: '#8C8D8F',
+      placeholder: '#6D7175',
     },
-    divider: '#E1E3E5',
+    divider: '#E0E0E0',
   },
   typography: {
     fontFamily: 'Inter, system-ui, sans-serif',
@@ -76,6 +82,14 @@ const theme = createTheme({
   shape: {
     borderRadius: 4,
   },
+  transitions: {
+    easing: {
+      snappy: 'cubic-bezier(0.25,0.8,0.4,1)',
+    },
+    duration: {
+      snappy: 150,
+    },
+  },
   components: {
     MuiButton: {
       styleOverrides: {
@@ -84,15 +98,15 @@ const theme = createTheme({
           textTransform: 'none',
           boxShadow: 'none',
           fontWeight: 600,
-          height: 32,
-          padding: '0 16px',
-          transition: 'background-color 150ms ease-out',
+          height: 28,
+          padding: '0 12px',
+          transition: 'background-color 150ms cubic-bezier(0.25,0.8,0.4,1)',
           '&:hover': {
             boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
           },
         },
         outlined: {
-          borderColor: '#8C8D8F',
+          borderColor: '#8C9196',
           color: '#202223',
           '&:hover': {
             backgroundColor: '#F1F2F3',
@@ -112,19 +126,23 @@ const theme = createTheme({
           borderRadius: 8,
         },
         elevation1: {
-          boxShadow: '0 2px 4px rgba(0,0,0,0.06)',
+          boxShadow: '0 0 0 1px rgba(0,0,0,0.05)',
+          border: '1px solid #E0E0E0',
         },
       },
     },
     MuiListItemButton: {
       styleOverrides: {
         root: {
+          height: 32,
+          paddingLeft: 2,
+          paddingRight: 2,
           '&.Mui-selected': {
-            backgroundColor: '#F0F1F2',
-            borderLeft: '2px solid #008060',
+            backgroundColor: '#F1F2F3',
+            borderLeft: '2px solid #2C6ECB',
           },
           '&:hover': {
-            backgroundColor: '#F0F1F2',
+            backgroundColor: '#F1F2F3',
           },
         },
       },
@@ -139,6 +157,10 @@ const theme = createTheme({
           '& .MuiOutlinedInput-root': {
             borderRadius: 4,
             backgroundColor: '#FFFFFF',
+          },
+          '& input::placeholder': {
+            color: '#6D7175',
+            opacity: 1,
           },
         },
       },

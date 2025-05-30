@@ -43,16 +43,16 @@ const Layout = ({ children }) => {
       {/* CssBaseline is now in App.js, applied globally */}
       <AppBar
         position="fixed"
-        sx={{
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: '#1C1C1D',
+        sx={(theme) => ({
+          zIndex: theme.zIndex.drawer + 1,
+          backgroundColor: theme.palette.background.header,
           color: '#FFFFFF',
-          borderBottom: '1px solid rgba(0,0,0,0.1)',
+          borderBottom: `1px solid ${theme.palette.divider}`,
           minHeight: 56,
-        }}
+        })}
         elevation={0}
       >
-        <Toolbar sx={{ minHeight: 56, px: 2, display: 'flex', justifyContent: 'space-between' }}>
+        <Toolbar sx={{ minHeight: 56, px: 2 }}>
           {isOverlay && (
             <IconButton
               color="inherit"
@@ -63,23 +63,23 @@ const Layout = ({ children }) => {
               <MenuIcon />
             </IconButton>
           )}
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography variant="h6" noWrap component="div" sx={{ mr: 2 }}>
-              ERP Dashboard
-            </Typography>
-            {!isCollapsed && <HeaderSearchBar sx={{ mr: 2 }} />}
+          <Typography variant="h6" noWrap component="div" sx={{ fontWeight: 600, fontSize: 14 }}>
+            ERP Dashboard
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
+            {!isCollapsed && <HeaderSearchBar />}
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             {isCollapsed && (
               <IconButton color="inherit" sx={{ ml: 1 }}>
-                <SearchIcon />
+                <SearchIcon sx={{ fontSize: 20 }} />
               </IconButton>
             )}
             <IconButton color="inherit" sx={{ ml: 1 }}>
-              <MailOutlineIcon />
+              <MailOutlineIcon sx={{ fontSize: 20 }} />
             </IconButton>
             <IconButton color="inherit" sx={{ ml: 1 }}>
-              <NotificationsNoneIcon />
+              <NotificationsNoneIcon sx={{ fontSize: 20 }} />
             </IconButton>
             <Avatar sx={{ ml: 1, width: 32, height: 32 }}>A</Avatar>
           </Box>
@@ -96,7 +96,7 @@ const Layout = ({ children }) => {
           '& .MuiDrawer-paper': {
             width: currentDrawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: theme.palette.background.default,
+            backgroundColor: theme.palette.background.sidebar,
             borderRight: `1px solid ${theme.palette.divider}`,
           },
         })}
@@ -109,15 +109,8 @@ const Layout = ({ children }) => {
               <ListItemButton
                 onClick={isOverlay ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/tiendas'}
-                sx={(theme) => ({
-                  '&:hover': { backgroundColor: theme.palette.action.hover },
-                  '&.Mui-selected': {
-                    backgroundColor: theme.palette.background.default,
-                    borderLeft: `2px solid ${theme.palette.primary.main}`,
-                  },
-                })}
               >
-              <ListItemIcon sx={{ color: location.pathname === '/tiendas' ? 'primary.main' : 'text.secondary' }}>
+              <ListItemIcon sx={{ color: location.pathname === '/tiendas' ? 'secondary.main' : 'text.secondary' }}>
                   <StorefrontOutlinedIcon />
               </ListItemIcon>
                 <ListItemText primary="Tiendas" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
@@ -129,15 +122,8 @@ const Layout = ({ children }) => {
               <ListItemButton
                 onClick={isOverlay ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/usuarios'}
-                sx={(theme) => ({
-                  '&:hover': { backgroundColor: theme.palette.action.hover },
-                  '&.Mui-selected': {
-                    backgroundColor: theme.palette.background.default,
-                    borderLeft: `2px solid ${theme.palette.primary.main}`,
-                  },
-                })}
               >
-                <ListItemIcon sx={{ color: location.pathname === '/usuarios' ? 'primary.main' : 'text.secondary' }}>
+                <ListItemIcon sx={{ color: location.pathname === '/usuarios' ? 'secondary.main' : 'text.secondary' }}>
                   <PeopleOutlineIcon />
                 </ListItemIcon>
                 <ListItemText primary="Usuarios" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
@@ -149,15 +135,8 @@ const Layout = ({ children }) => {
               <ListItemButton
                 onClick={isOverlay ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/clientes'}
-                sx={(theme) => ({
-                  '&:hover': { backgroundColor: theme.palette.action.hover },
-                  '&.Mui-selected': {
-                    backgroundColor: theme.palette.background.default,
-                    borderLeft: `2px solid ${theme.palette.primary.main}`,
-                  },
-                })}
               >
-                <ListItemIcon sx={{ color: location.pathname === '/clientes' ? 'primary.main' : 'text.secondary' }}>
+                <ListItemIcon sx={{ color: location.pathname === '/clientes' ? 'secondary.main' : 'text.secondary' }}>
                   <PersonOutlineIcon />
                 </ListItemIcon>
                 <ListItemText primary="Clientes" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
