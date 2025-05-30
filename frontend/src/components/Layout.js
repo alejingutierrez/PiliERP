@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Drawer, Toolbar, Typography, List, ListItem, ListItemIcon, ListItemText, Box, ListItemButton } from '@mui/material'; // CssBaseline removed as it's in App.js
+import { AppBar, Drawer, Toolbar, Typography, List, ListItem, ListItemIcon, ListItemText, Box, ListItemButton } from '@mui/material';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
@@ -12,19 +12,24 @@ const Layout = ({ children }) => {
   return (
     <Box sx={{ display: 'flex' }}>
       {/* CssBaseline is now in App.js, applied globally */}
-      <AppBar 
-        position="fixed" 
-        sx={{ 
+      <AppBar
+        position="fixed"
+        sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: 'primary.main', // Explicitly set, or rely on theme
-          elevation: 4, // Added elevation
+          backgroundColor: '#ffffff',
+          color: 'text.primary',
+          boxShadow: '0 1px 0 rgba(0,0,0,0.05)',
+          minHeight: 56,
         }}
-        elevation={4} // Ensure elevation is applied
+        elevation={0}
       >
-        <Toolbar>
-          <Typography variant="h6" noWrap component="div" sx={{ color: 'primary.contrastText' }}> {/* Ensuring contrast text */}
+        <Toolbar sx={{ minHeight: 56, display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="h6" noWrap component="div">
             ERP Dashboard
           </Typography>
+          <Box>
+            {/* Global actions placeholder */}
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -37,17 +42,21 @@ const Layout = ({ children }) => {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: 'background.paper', // Drawer background
+            backgroundColor: '#F6F6F7',
+            borderRight: '1px solid #E1E3E5',
           },
         }}
       >
         <Toolbar /> {/* Necessary for content to be below app bar */}
         <Box sx={{ overflow: 'auto' }}>
           <List>
-            <ListItem disablePadding component={Link} to="/tiendas" sx={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem disablePadding component={Link} to="/tiendas" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <ListItemButton
                 selected={location.pathname === '/tiendas'}
-                sx={{ '&:hover': { backgroundColor: 'action.hover' } }}
+                sx={{
+                  '&:hover': { backgroundColor: 'action.hover' },
+                  '&.Mui-selected': { backgroundColor: '#F6F6F7', borderLeft: '2px solid #008060' }
+                }}
               >
                 <ListItemIcon sx={{ color: location.pathname === '/tiendas' ? 'primary.main' : 'text.secondary' }}>
                   <StorefrontIcon />
@@ -55,10 +64,13 @@ const Layout = ({ children }) => {
                 <ListItemText primary="Tiendas" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding component={Link} to="/usuarios" sx={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem disablePadding component={Link} to="/usuarios" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <ListItemButton
                 selected={location.pathname === '/usuarios'}
-                sx={{ '&:hover': { backgroundColor: 'action.hover' } }}
+                sx={{
+                  '&:hover': { backgroundColor: 'action.hover' },
+                  '&.Mui-selected': { backgroundColor: '#F6F6F7', borderLeft: '2px solid #008060' }
+                }}
               >
                 <ListItemIcon sx={{ color: location.pathname === '/usuarios' ? 'primary.main' : 'text.secondary' }}>
                   <PeopleIcon />
@@ -66,10 +78,13 @@ const Layout = ({ children }) => {
                 <ListItemText primary="Usuarios" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding component={Link} to="/clientes" sx={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItem disablePadding component={Link} to="/clientes" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <ListItemButton
                 selected={location.pathname === '/clientes'}
-                sx={{ '&:hover': { backgroundColor: 'action.hover' } }}
+                sx={{
+                  '&:hover': { backgroundColor: 'action.hover' },
+                  '&.Mui-selected': { backgroundColor: '#F6F6F7', borderLeft: '2px solid #008060' }
+                }}
               >
                 <ListItemIcon sx={{ color: location.pathname === '/clientes' ? 'primary.main' : 'text.secondary' }}>
                   <PersonIcon />
