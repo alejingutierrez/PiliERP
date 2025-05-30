@@ -8,11 +8,11 @@ const PrimaryButton = ({ children, ...props }) => (
     disableElevation
     {...props}
     sx={{
-      borderRadius: 3,
+      borderRadius: 4,
       textTransform: 'none',
       fontWeight: 600,
+      height: 32,
       px: 2,
-      py: 1,
       ...props.sx,
     }}
   >

@@ -2,12 +2,8 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
-    // Colors inspired by Shopify Polaris
     primary: {
       main: '#008060',
-    },
-    secondary: {
-      main: '#5C6AC4',
     },
     background: {
       default: '#F6F6F7',
@@ -15,36 +11,49 @@ const theme = createTheme({
     },
     text: {
       primary: '#202223',
-      secondary: '#6D7175',
+      secondary: '#4C4D4F',
+      disabled: '#8C8D8F',
     },
     divider: '#E1E3E5',
   },
   typography: {
-    fontFamily: 'Inter, sans-serif',
+    fontFamily: 'Inter, system-ui, sans-serif',
     fontSize: 14,
     h1: {
-      fontWeight: 700,
-      fontSize: '2.25rem',
+      fontWeight: 600,
+      fontSize: '1.75rem',
+      lineHeight: 1.4,
+      letterSpacing: '-0.2px',
     },
     h2: {
-      fontWeight: 700,
-      fontSize: '2rem',
+      fontWeight: 600,
+      fontSize: '1.5rem',
+      lineHeight: 1.4,
+      letterSpacing: '-0.2px',
     },
     h3: {
       fontWeight: 600,
-      fontSize: '1.75rem',
+      fontSize: '1.25rem',
+      lineHeight: 1.4,
+      letterSpacing: '-0.2px',
     },
     h4: {
       fontWeight: 600,
-      fontSize: '1.5rem',
+      fontSize: '1.125rem',
+      lineHeight: 1.4,
+      letterSpacing: '-0.2px',
     },
     h5: {
       fontWeight: 600,
-      fontSize: '1.25rem',
+      fontSize: '1rem',
+      lineHeight: 1.4,
+      letterSpacing: '-0.2px',
     },
     h6: {
       fontWeight: 600,
-      fontSize: '1.125rem',
+      fontSize: '0.875rem',
+      lineHeight: 1.4,
+      letterSpacing: '-0.2px',
     },
     subtitle1: {
       fontSize: '1rem',
@@ -65,19 +74,34 @@ const theme = createTheme({
     },
   },
   shape: {
-    // Slightly sharper edges
-    borderRadius: 3,
+    borderRadius: 4,
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 3,
+          borderRadius: 4,
           textTransform: 'none',
           boxShadow: 'none',
           fontWeight: 600,
+          height: 32,
+          padding: '0 16px',
+          transition: 'background-color 150ms ease-out',
           '&:hover': {
-            boxShadow: 'none',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+          },
+        },
+        outlined: {
+          borderColor: '#8C8D8F',
+          color: '#202223',
+          '&:hover': {
+            backgroundColor: '#F1F2F3',
+          },
+        },
+        contained: {
+          '&:disabled': {
+            backgroundColor: '#C4C4C4',
+            color: '#FFFFFF',
           },
         },
       },
@@ -85,10 +109,10 @@ const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         rounded: {
-          borderRadius: 3,
+          borderRadius: 8,
         },
         elevation1: {
-          boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1)',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.06)',
         },
       },
     },
@@ -96,7 +120,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-selected': {
-            backgroundColor: 'action.selected',
+            backgroundColor: '#F0F1F2',
+            borderLeft: '2px solid #008060',
+          },
+          '&:hover': {
+            backgroundColor: '#F0F1F2',
           },
         },
       },
@@ -109,8 +137,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-root': {
-            borderRadius: 3,
-            backgroundColor: '#fff',
+            borderRadius: 4,
+            backgroundColor: '#FFFFFF',
           },
         },
       },
@@ -137,6 +165,16 @@ const theme = createTheme({
     MuiTooltip: {
       defaultProps: {
         arrow: true,
+      },
+    },
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focusVisible': {
+            outline: '2px solid #005F4B',
+            outlineOffset: 0,
+          },
+        },
       },
     },
   },
