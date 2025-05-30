@@ -2,21 +2,22 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
+    // Colors inspired by Shopify Polaris
     primary: {
-      main: '#2c6ecb',
-    },
-    secondary: {
       main: '#008060',
     },
+    secondary: {
+      main: '#5C6AC4',
+    },
     background: {
-      default: '#f4f6f8',
-      paper: '#ffffff',
+      default: '#F6F6F7',
+      paper: '#FFFFFF',
     },
     text: {
-      primary: '#212B36',
-      secondary: '#637381',
+      primary: '#202223',
+      secondary: '#6D7175',
     },
-    divider: '#dfe3e8',
+    divider: '#E1E3E5',
   },
   typography: {
     fontFamily: 'Inter, sans-serif',
@@ -64,14 +65,30 @@ const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 4,
+    // Slightly sharper edges
+    borderRadius: 3,
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 4,
+          borderRadius: 3,
           textTransform: 'none',
+          boxShadow: 'none',
+          fontWeight: 600,
+          '&:hover': {
+            boxShadow: 'none',
+          },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        rounded: {
+          borderRadius: 3,
+        },
+        elevation1: {
+          boxShadow: '0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1)',
         },
       },
     },

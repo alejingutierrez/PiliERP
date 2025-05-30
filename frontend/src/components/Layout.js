@@ -14,13 +14,13 @@ const Layout = ({ children }) => {
       {/* CssBaseline is now in App.js, applied globally */}
       <AppBar
         position="fixed"
-        sx={{
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          backgroundColor: '#ffffff',
-          color: 'text.primary',
+        sx={(theme) => ({
+          zIndex: theme.zIndex.drawer + 1,
+          backgroundColor: theme.palette.background.paper,
+          color: theme.palette.text.primary,
           boxShadow: '0 1px 0 rgba(0,0,0,0.05)',
           minHeight: 56,
-        }}
+        })}
         elevation={0}
       >
         <Toolbar sx={{ minHeight: 56, display: 'flex', justifyContent: 'space-between' }}>
@@ -36,16 +36,16 @@ const Layout = ({ children }) => {
         variant="persistent"
         anchor="left"
         open={true}
-        sx={{
+        sx={(theme) => ({
           width: drawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
-            backgroundColor: '#F6F6F7',
-            borderRight: '1px solid #E1E3E5',
+            backgroundColor: theme.palette.background.default,
+            borderRight: `1px solid ${theme.palette.divider}`,
           },
-        }}
+        })}
       >
         <Toolbar /> {/* Necessary for content to be below app bar */}
         <Box sx={{ overflow: 'auto' }}>
@@ -53,10 +53,13 @@ const Layout = ({ children }) => {
             <ListItem disablePadding component={Link} to="/tiendas" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <ListItemButton
                 selected={location.pathname === '/tiendas'}
-                sx={{
-                  '&:hover': { backgroundColor: 'action.hover' },
-                  '&.Mui-selected': { backgroundColor: '#F6F6F7', borderLeft: '2px solid #008060' }
-                }}
+                sx={(theme) => ({
+                  '&:hover': { backgroundColor: theme.palette.action.hover },
+                  '&.Mui-selected': {
+                    backgroundColor: theme.palette.background.default,
+                    borderLeft: `2px solid ${theme.palette.primary.main}`,
+                  },
+                })}
               >
                 <ListItemIcon sx={{ color: location.pathname === '/tiendas' ? 'primary.main' : 'text.secondary' }}>
                   <StorefrontIcon />
@@ -67,10 +70,13 @@ const Layout = ({ children }) => {
             <ListItem disablePadding component={Link} to="/usuarios" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <ListItemButton
                 selected={location.pathname === '/usuarios'}
-                sx={{
-                  '&:hover': { backgroundColor: 'action.hover' },
-                  '&.Mui-selected': { backgroundColor: '#F6F6F7', borderLeft: '2px solid #008060' }
-                }}
+                sx={(theme) => ({
+                  '&:hover': { backgroundColor: theme.palette.action.hover },
+                  '&.Mui-selected': {
+                    backgroundColor: theme.palette.background.default,
+                    borderLeft: `2px solid ${theme.palette.primary.main}`,
+                  },
+                })}
               >
                 <ListItemIcon sx={{ color: location.pathname === '/usuarios' ? 'primary.main' : 'text.secondary' }}>
                   <PeopleIcon />
@@ -81,10 +87,13 @@ const Layout = ({ children }) => {
             <ListItem disablePadding component={Link} to="/clientes" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <ListItemButton
                 selected={location.pathname === '/clientes'}
-                sx={{
-                  '&:hover': { backgroundColor: 'action.hover' },
-                  '&.Mui-selected': { backgroundColor: '#F6F6F7', borderLeft: '2px solid #008060' }
-                }}
+                sx={(theme) => ({
+                  '&:hover': { backgroundColor: theme.palette.action.hover },
+                  '&.Mui-selected': {
+                    backgroundColor: theme.palette.background.default,
+                    borderLeft: `2px solid ${theme.palette.primary.main}`,
+                  },
+                })}
               >
                 <ListItemIcon sx={{ color: location.pathname === '/clientes' ? 'primary.main' : 'text.secondary' }}>
                   <PersonIcon />
@@ -97,13 +106,13 @@ const Layout = ({ children }) => {
       </Drawer>
       <Box
         component="main"
-        sx={{ 
-          flexGrow: 1, 
-          bgcolor: 'background.default', // Ensure this uses theme
-          p: 3, // Uses theme.spacing(3) by default
+        sx={(theme) => ({
+          flexGrow: 1,
+          bgcolor: theme.palette.background.default,
+          p: 3,
           marginLeft: `${drawerWidth}px`,
-          animation: 'fadeIn 0.5s ease-in-out' // Added fade-in animation
-        }}
+          animation: 'fadeIn 0.5s ease-in-out',
+        })}
       >
         <Toolbar /> {/* Necessary for content to be below app bar */}
         {children}
