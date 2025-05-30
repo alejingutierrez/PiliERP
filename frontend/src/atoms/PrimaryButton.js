@@ -1,19 +1,21 @@
 import React from 'react';
-import Button from '@mui/material/Button';
+import { MdFilledButton } from '@material/web/all.js';
 
-const PrimaryButton = ({ children, ...props }) => (
-  <Button
-    variant="contained"
-    color="primary"
-    disableElevation
-    {...props}
-    sx={{
-      // borderRadius removed to inherit from MuiButton styleOverrides in theme
-      ...props.sx,
-    }}
-  >
-    {children}
-  </Button>
-);
+const PrimaryButton = ({ children, sx = {}, ...props }) => {
+  // Combine sx from props with default styles from guidelines
+  const style = {
+    fontWeight: '600',
+    textTransform: 'none',
+    borderRadius: '10px', // As per DESIGN_GUIDELINES.md global border radius
+    // Spread sx from props, allowing overrides
+    ...sx,
+  };
+
+  return (
+    <MdFilledButton style={style} {...props}>
+      {children}
+    </MdFilledButton>
+  );
+};
 
 export default PrimaryButton;

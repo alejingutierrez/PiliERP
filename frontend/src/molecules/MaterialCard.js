@@ -1,22 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// Imports moved to src/index.js
+import { MdElevatedCard, MdFilledButton } from '@material/web/all.js';
 
 const MaterialCard = ({ title, content, actionText, onActionClick }) => {
   return (
-    <md-elevated-card>
+    <MdElevatedCard>
       <div style={{ padding: '16px' }}>
         <h3>{title}</h3>
         <p>{content}</p>
         {actionText && onActionClick && (
           <div style={{ marginTop: '16px', textAlign: 'right' }}>
-            <md-filled-button onClick={onActionClick}>
+            <MdFilledButton onClick={onActionClick}>
               {actionText}
-            </md-filled-button>
+            </MdFilledButton>
           </div>
         )}
       </div>
-    </md-elevated-card>
+    </MdElevatedCard>
   );
 };
 

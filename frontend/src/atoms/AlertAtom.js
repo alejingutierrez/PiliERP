@@ -1,26 +1,103 @@
 import React from 'react';
-import MuiAlert from '@mui/material/Alert';
-// No specific styling needed with `styled` for this atom,
-// as MUI Alert handles props directly and provides variants.
+import { MdElevatedCard } from '@material/web/card/md-elevated-card.js';
+import { MdIcon } from '@material/web/icon/md-icon.js';
+import { MdIconButton } from '@material/web/iconbutton/md-icon-button.js';
 
 const AlertAtom = ({
   severity = 'info', // 'error', 'warning', 'info', 'success'
-  variant = 'standard', // 'standard', 'filled', 'outlined'
-  children,
-  action, // Optional: e.g., <Button color="inherit" size="small">UNDO</Button>
-  onClose, // Optional: function to call when alert is closed
-  ...props // To pass any other valid MuiAlert props
+  variant = 'standard', // 'standard', 'filled', 'outlined' (filled/standard will be similar)
+  children, // Message content
+  title,    // Optional title from props
+  action,   // Optional: React node for actions
+  onClose,  // Optional: function to call when alert is closed
+  sx = {},
+  ...props // To pass any other props
 }) => {
+  const getSeverityStyles = () => {
+    let iconName = 'info';
+    let backgroundColor = '#2C6ECB'; // Default to info color (secondary.main)
+    let textColor = '#FFFFFF'; // Default contrast text
+
+    // DESIGN_GUIDELINES.md semantic colors:
+    // Success (`success.main`): `#36A269`
+    // Warning (`warning.main`): `#EEC200` (Needs dark text)
+    // Error (`error.main`): `#D82C0D`
+    // Info: using secondary.main `#2C6ECB`
+
+    switch (severity) {
+      case 'success':
+        iconName = 'check_circle';
+        backgroundColor = '#36A269';
+        textColor = '#FFFFFF';
+        break;
+      case 'warning':
+        iconName = 'warning';
+        backgroundColor = '#EEC200';
+        textColor = '#1A1B1C'; // Dark text for yellow background
+        break;
+      case 'error':
+        iconName = 'error';
+        backgroundColor = '#D82C0D';
+        textColor = '#FFFFFF';
+        break;
+      case 'info':
+      default:
+        iconName = 'info';
+        backgroundColor = '#2C6ECB'; // secondary.main from guidelines
+        textColor = '#FFFFFF';
+        break;
+    }
+    return { iconName, backgroundColor, textColor };
+  };
+
+  const { iconName, backgroundColor, textColor } = getSeverityStyles();
+
+  const cardStyle = {
+    '--md-elevated-card-container-color': variant === 'outlined' ? 'transparent' : backgroundColor,
+    '--md-elevated-card-label-text-color': textColor, // May not directly apply, use on text elements
+    '--md-sys-color-on-surface': textColor, // Affects icon and text color if not overridden
+    '--md-sys-color-on-surface-variant': textColor,
+    '--md-sys-color-primary': textColor, // For icon button if not themed
+    '--md-elevated-card-outline-color': variant === 'outlined' ? backgroundColor : 'transparent',
+    '--md-elevated-card-outline-width': variant === 'outlined' ? '1px' : '0px',
+    padding: '12px 16px',
+    display: 'flex',
+    alignItems: 'flex-start', // Align items to the top for multi-line text
+    borderRadius: '10px', // Global border radius
+    ...sx,
+  };
+
+  const textContentStyle = {
+    color: textColor, // Ensure text color directly
+    flexGrow: 1,
+    marginLeft: '12px',
+    marginRight: (action || onClose) ? '12px' : '0px',
+  };
+
+  const titleStyle = {
+    fontWeight: '600', // From guidelines h_ variants
+    // color: textColor, // Inherited or set directly
+  };
+
+  const iconStyle = {
+    color: variant === 'outlined' ? backgroundColor : textColor, // Icon takes severity color in outlined variant
+    marginTop: '2px', // Slight adjustment for alignment with text
+  };
+
   return (
-    <MuiAlert
-      severity={severity}
-      variant={variant}
-      action={action}
-      onClose={onClose} // MUI Alert will render a close button if onClose is provided and no custom action overrides it
-      {...props}
-    >
-      {children}
-    </MuiAlert>
+    <MdElevatedCard style={cardStyle} {...props}>
+      <MdIcon style={iconStyle}>{iconName}</MdIcon>
+      <div style={textContentStyle}>
+        {title && <div style={titleStyle}>{title}</div>}
+        {children}
+      </div>
+      {action}
+      {onClose && (
+        <MdIconButton onClick={onClose} style={{ marginLeft: 'auto', color: textColor }}>
+          <MdIcon>close</MdIcon>
+        </MdIconButton>
+      )}
+    </MdElevatedCard>
   );
 };
 

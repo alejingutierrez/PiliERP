@@ -1,41 +1,118 @@
 import React from 'react';
-import MuiAvatar from '@mui/material/Avatar';
-import { styled } from '@mui/material/styles';
+import { MdIcon } from '@material/web/icon/md-icon.js';
 
-const StyledAvatar = styled(MuiAvatar, {
-  shouldForwardProp: (prop) => prop !== 'size',
-})(({ theme, size }) => {
-  let finalSize;
+// DESIGN_GUIDELINES.md colors for reference:
+// Primary Contrast Text (`primary.contrastText`): `#FFFFFF`
+// Text Secondary (`text.secondary`): `#6D7175` (using as default background for letter/icon avatars)
+// Global Border Radius (`shape.borderRadius`): `10px`
+
+const AvatarAtom = ({
+  alt,
+  children,
+  icon, // New prop for Material Symbol name or SVG element
+  src,
+  srcSet,
+  imgProps,
+  variant = 'circular', // 'circular', 'rounded', 'square'
+  size = 'medium', // 'small', 'medium', 'large', or number (pixels)
+  sx = {},
+  ...props
+}) => {
+  let displaySize = '40px';
+  let letterIconFontSize = '20px';
+
   if (typeof size === 'number') {
-    finalSize = theme.typography.pxToRem(size);
+    displaySize = `${size}px`;
+    letterIconFontSize = `${Math.floor(size / 2)}px`;
   } else {
     switch (size) {
       case 'small':
-        finalSize = theme.typography.pxToRem(24);
+        displaySize = '24px';
+        letterIconFontSize = '12px';
         break;
       case 'large':
-        finalSize = theme.typography.pxToRem(56);
+        displaySize = '56px';
+        letterIconFontSize = '28px';
         break;
       case 'medium':
       default:
-        finalSize = theme.typography.pxToRem(40);
+        displaySize = '40px';
+        letterIconFontSize = '20px';
         break;
     }
   }
-  return {
-    width: finalSize,
-    height: finalSize,
-    // fontSize is important for text avatars
-    fontSize: `calc(${finalSize} / 2)`, // Adjust font size based on avatar size
-  };
-});
 
-const AvatarAtom = ({ src, alt, size = 'medium', children, ...props }) => {
-  return (
-    <StyledAvatar src={src} alt={alt} size={size} {...props}>
-      {children}
-    </StyledAvatar>
-  );
+  const baseStyle = {
+    width: displaySize,
+    height: displaySize,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden', // Ensure content like images respect border radius
+    ...sx, // sx should be applied first to be overridable by specific logic below
+  };
+
+  if (variant === 'circular') {
+    baseStyle.borderRadius = '50%';
+  } else if (variant === 'rounded') {
+    baseStyle.borderRadius = sx.borderRadius || '10px'; // Guideline or sx override
+  } else { // square
+    baseStyle.borderRadius = sx.borderRadius || '0px';
+  }
+
+  // Default background and text colors for letter/icon avatars
+  // These can be overridden by sx if sx includes backgroundColor or color
+  const defaultBgColor = sx.backgroundColor || '#6D7175'; // text.secondary from guidelines
+  const defaultTextColor = sx.color || '#FFFFFF'; // primary.contrastText from guidelines
+
+
+  if (src) {
+    return (
+      <img
+        alt={alt}
+        src={src}
+        srcSet={srcSet}
+        style={baseStyle} // borderRadius will apply due to overflow:hidden on parent or direct on img
+        {...imgProps}
+        {...props}
+      />
+    );
+  } else if (icon) {
+    const iconStyle = {
+      fontSize: letterIconFontSize, // For Material Symbols font icons
+      '--md-icon-size': letterIconFontSize, // For MdIcon component size
+      color: defaultTextColor, // Default icon color, sx can override
+      ...sx.iconStyles, // Allow passing styles directly to icon via sx
+    };
+    return (
+      <div style={{ ...baseStyle, backgroundColor: defaultBgColor, color: defaultTextColor }} {...props}>
+        {typeof icon === 'string' ? <MdIcon style={iconStyle}>{icon}</MdIcon> : icon}
+      </div>
+    );
+  } else {
+    let letter = '';
+    if (typeof children === 'string' && children.trim().length > 0) {
+      letter = children.trim().charAt(0).toUpperCase();
+    } else if (typeof alt === 'string' && alt.trim().length > 0) {
+      letter = alt.trim().charAt(0).toUpperCase();
+    }
+
+    if (letter) {
+      return (
+        <div style={{ ...baseStyle, backgroundColor: defaultBgColor, color: defaultTextColor, fontSize: letterIconFontSize, lineHeight: displaySize }} {...props}>
+          {letter}
+        </div>
+      );
+    } else {
+      // Fallback to a default icon if no src, icon, children, or alt provide content
+      const fallbackIconStyle = { fontSize: letterIconFontSize, '--md-icon-size': letterIconFontSize, color: defaultTextColor };
+      return (
+        <div style={{ ...baseStyle, backgroundColor: defaultBgColor, color: defaultTextColor }} {...props}>
+          <MdIcon style={fallbackIconStyle}>person</MdIcon> {/* Default fallback icon */}
+        </div>
+      );
+    }
+  }
 };
 
 export default AvatarAtom;
