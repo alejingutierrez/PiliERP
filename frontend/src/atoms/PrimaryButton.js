@@ -1,20 +1,36 @@
-import React from 'react';
-import { MdFilledButton } from '@material/web/all.js';
+import React, { useRef, useEffect } from 'react';
+import '@material/web/button/filled-button.js'; // Importa el componente web directamente
 
 const PrimaryButton = ({ children, sx = {}, ...props }) => {
-  // Combine sx from props with default styles from guidelines
-  const style = {
-    fontWeight: '600',
-    textTransform: 'none',
-    borderRadius: '10px', // As per DESIGN_GUIDELINES.md global border radius
-    // Spread sx from props, allowing overrides
-    ...sx,
-  };
+  const buttonRef = useRef(null);
+
+  useEffect(() => {
+    const buttonElement = buttonRef.current;
+    if (buttonElement) {
+      // Aplica estilos y otras propiedades al componente web
+      Object.entries(props).forEach(([key, value]) => {
+        if (key !== 'children' && key !== 'sx') {
+          buttonElement.setAttribute(key, value);
+        }
+      });
+
+      // Aplica los estilos de 'sx' directamente al elemento DOM
+      const style = {
+        fontWeight: '600',
+        textTransform: 'none',
+        borderRadius: '10px',
+        ...sx,
+      };
+      Object.entries(style).forEach(([key, value]) => {
+        buttonElement.style[key] = value;
+      });
+    }
+  }, [props, sx]);
 
   return (
-    <MdFilledButton style={style} {...props}>
+    <md-filled-button ref={buttonRef}>
       {children}
-    </MdFilledButton>
+    </md-filled-button>
   );
 };
 
