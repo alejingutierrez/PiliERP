@@ -3,11 +3,12 @@ import { AppBar, Drawer, Toolbar, Typography, List, ListItem, ListItemIcon, List
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 const Layout = ({ children }) => {
+  const location = useLocation();
   return (
     <Box sx={{ display: 'flex' }}>
       {/* CssBaseline is now in App.js, applied globally */}
@@ -44,24 +45,33 @@ const Layout = ({ children }) => {
         <Box sx={{ overflow: 'auto' }}>
           <List>
             <ListItem disablePadding component={Link} to="/tiendas" sx={{ textDecoration: 'none', color: 'inherit' }}>
-              <ListItemButton sx={{ '&:hover': { backgroundColor: 'action.hover' } }}>
-                <ListItemIcon sx={{ color: 'text.secondary' }}>
+              <ListItemButton
+                selected={location.pathname === '/tiendas'}
+                sx={{ '&:hover': { backgroundColor: 'action.hover' } }}
+              >
+                <ListItemIcon sx={{ color: location.pathname === '/tiendas' ? 'primary.main' : 'text.secondary' }}>
                   <StorefrontIcon />
                 </ListItemIcon>
                 <ListItemText primary="Tiendas" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding component={Link} to="/usuarios" sx={{ textDecoration: 'none', color: 'inherit' }}>
-              <ListItemButton sx={{ '&:hover': { backgroundColor: 'action.hover' } }}>
-                <ListItemIcon sx={{ color: 'text.secondary' }}>
+              <ListItemButton
+                selected={location.pathname === '/usuarios'}
+                sx={{ '&:hover': { backgroundColor: 'action.hover' } }}
+              >
+                <ListItemIcon sx={{ color: location.pathname === '/usuarios' ? 'primary.main' : 'text.secondary' }}>
                   <PeopleIcon />
                 </ListItemIcon>
                 <ListItemText primary="Usuarios" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding component={Link} to="/clientes" sx={{ textDecoration: 'none', color: 'inherit' }}>
-              <ListItemButton sx={{ '&:hover': { backgroundColor: 'action.hover' } }}>
-                <ListItemIcon sx={{ color: 'text.secondary' }}>
+              <ListItemButton
+                selected={location.pathname === '/clientes'}
+                sx={{ '&:hover': { backgroundColor: 'action.hover' } }}
+              >
+                <ListItemIcon sx={{ color: location.pathname === '/clientes' ? 'primary.main' : 'text.secondary' }}>
                   <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary="Clientes" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />

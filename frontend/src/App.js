@@ -5,7 +5,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from './theme';
-import { Box, Typography, Paper, Grid } from '@mui/material'; // Added Grid, Box, Paper, Typography
+import { Box, Typography, Grid } from '@mui/material';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import PeopleIcon from '@mui/icons-material/People';
+import PersonIcon from '@mui/icons-material/Person';
+import DashboardCard from './components/DashboardCard';
 import TiendasPage from './pages/TiendasPage';
 import UsuariosPage from './pages/UsuariosPage';
 import ClientesPage from './pages/ClientesPage';
@@ -27,34 +31,25 @@ function App() {
                 </Typography>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={6} md={4}>
-                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 180, borderRadius: theme.shape.borderRadius, boxShadow: theme.shadows[1] }}>
-                      <Typography variant="h6" component="h2" gutterBottom>
-                        Resumen de Tiendas
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Acceda y gestione la información de las tiendas.
-                      </Typography>
-                    </Paper>
+                    <DashboardCard
+                      title="Resumen de Tiendas"
+                      description="Acceda y gestione la información de las tiendas."
+                      icon={StorefrontIcon}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
-                    <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', height: 180, borderRadius: theme.shape.borderRadius, boxShadow: theme.shadows[1] }}>
-                      <Typography variant="h6" component="h2" gutterBottom>
-                        Gestión de Usuarios
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Administre los usuarios y sus permisos en el sistema.
-                      </Typography>
-                    </Paper>
+                    <DashboardCard
+                      title="Gestión de Usuarios"
+                      description="Administre los usuarios y sus permisos en el sistema."
+                      icon={PeopleIcon}
+                    />
                   </Grid>
                   <Grid item xs={12} sm={6} md={4}>
-                    <Paper sx={{ p:2, display: 'flex', flexDirection: 'column', height: 180, borderRadius: theme.shape.borderRadius, boxShadow: theme.shadows[1] }}>
-                      <Typography variant="h6" component="h2" gutterBottom>
-                        Directorio de Clientes
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Consulte y administre la base de datos de clientes.
-                      </Typography>
-                    </Paper>
+                    <DashboardCard
+                      title="Directorio de Clientes"
+                      description="Consulte y administre la base de datos de clientes."
+                      icon={PersonIcon}
+                    />
                   </Grid>
                 </Grid>
                 <Typography variant="body1" sx={{ mt: 4 }}>
