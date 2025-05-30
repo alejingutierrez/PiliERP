@@ -1,40 +1,57 @@
-import React, { useRef, useEffect } from 'react';
-import '@material/web/labs/card/elevated-card.js';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { MWCElevatedCard } from '../mwc_wrappers/MWCElevatedCard';
 
-const AppCard = ({ children, sx = {}, ...props }) => {
-  const cardRef = useRef(null);
+/**
+ * AppCard is a general purpose card component using MWCElevatedCard.
+ * It applies consistent padding and allows for additional styling.
+ */
+const AppCard = ({ children, sx = {}, style = {}, ...props }) => {
+  // Extract specific style properties that were handled by the inner div
+  // Default padding to 16px if not specified in sx.
+  const { p, padding: sxPadding, backgroundColor: sxBackgroundColor, ...otherSx } = sx;
 
-  // Extract padding and other styles from sx.
-  // Default padding to 16px (theme.spacing(4)) if not specified in sx.
-  const { p, padding = '16px', backgroundColor, ...otherSx } = sx;
+  // Determine final padding for the inner div
+  let finalPadding = '16px'; // Default
+  if (sxPadding) {
+    finalPadding = typeof sxPadding === 'number' ? `${sxPadding}px` : sxPadding;
+  }
+  if (p) { // p prop (theme spacing multiplier) overrides padding
+    finalPadding = `${p * 4}px`; // Assuming theme.spacing was 4
+  }
 
-  // If p is provided, it overrides padding. Assume p is a number like mui.
-  const finalPadding = p ? `${p * 4}px` : padding;
+  // Combine otherSx from sx prop and the direct style prop for the wrapper
+  const wrapperStyles = { ...otherSx, ...style };
 
-  useEffect(() => {
-    const cardElement = cardRef.current;
-    if (cardElement) {
-      // Apply any additional props to the web component
-      Object.entries(props).forEach(([key, value]) => {
-        if (key !== 'children' && key !== 'sx') {
-          cardElement.setAttribute(key, value);
-        }
-      });
-
-      // Apply other styles from sx to the card element
-      Object.entries(otherSx).forEach(([key, value]) => {
-        cardElement.style[key] = value;
-      });
-    }
-  }, [props, otherSx]);
+  // The MWCElevatedCard itself will receive other props directly.
+  // The sx prop is mostly deprecated in favor of direct `style` or CSS classes.
+  // We are preserving the inner div for padding and background color control,
+  // as this was the previous behavior.
 
   return (
-    <md-elevated-card ref={cardRef}>
-      <div style={{ padding: finalPadding, backgroundColor }}>
+    <MWCElevatedCard style={wrapperStyles} {...props}>
+      <div style={{ padding: finalPadding, backgroundColor: sxBackgroundColor }}>
         {children}
       </div>
-    </md-elevated-card>
+    </MWCElevatedCard>
   );
+};
+
+AppCard.propTypes = {
+  /**
+   * Content of the card.
+   */
+  children: PropTypes.node,
+  /**
+   * SX prop for MUI-like styling. Some properties (padding, backgroundColor)
+   * are applied to an inner div. Others are passed as `style` to the wrapper.
+   * Consider migrating to direct `style` prop or CSS classes.
+   */
+  sx: PropTypes.object,
+  /**
+   * Standard React style prop for the MWCElevatedCard wrapper.
+   */
+  style: PropTypes.object,
 };
 
 export default AppCard;

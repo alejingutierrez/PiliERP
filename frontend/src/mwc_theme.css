@@ -1,0 +1,182 @@
+/*
+  Material Web Components Global Theme
+  Translated from frontend/src/theme.js (MUI theme)
+*/
+
+:root {
+  /* --- Color System Tokens (Based on Material Design 3) --- */
+  /* Using names from https://m3.material.io/styles/color/system-tokens */
+
+  /* Primary Palette */
+  --md-sys-color-primary: #5C6AC4; /* from primary.main */
+  --md-sys-color-on-primary: #FFFFFF; /* from primary.contrastText */
+  --md-sys-color-primary-container: #E0E0FF; /* Approximate, lighter shade of primary */
+  --md-sys-color-on-primary-container: #101070; /* Approximate, darker for contrast */
+
+  /* Secondary Palette (MWC often uses 'secondary' for less emphasis than primary) */
+  --md-sys-color-secondary: #545F7D; /* Derived from primary, less saturated, or could be a new accent */
+  --md-sys-color-on-secondary: #FFFFFF;
+  --md-sys-color-secondary-container: #DDE2FF; /* Approximate */
+  --md-sys-color-on-secondary-container: #101A37; /* Approximate */
+
+  /* Tertiary Palette (Can be used for extra accents, mapped from MUI secondary.main for now) */
+  --md-sys-color-tertiary: #2C6ECB; /* from secondary.main */
+  --md-sys-color-on-tertiary: #FFFFFF;
+  --md-sys-color-tertiary-container: #DCEBFF; /* Approximate */
+  --md-sys-color-on-tertiary-container: #001D36; /* Approximate */
+
+  /* Error Palette */
+  --md-sys-color-error: #D82C0D; /* from error.main */
+  --md-sys-color-on-error: #FFFFFF;
+  --md-sys-color-error-container: #FFDAD4; /* Approximate */
+  --md-sys-color-on-error-container: #410001; /* Approximate */
+
+  /* Neutral Palette (Backgrounds & Surfaces) */
+  --md-sys-color-background: #F4F6F8; /* from background.default */
+  --md-sys-color-on-background: #1A1B1C; /* from text.primary */
+
+  --md-sys-color-surface: #FFFFFF; /* from background.paper - for cards, dialogs etc. */
+  --md-sys-color-on-surface: #1A1B1C; /* from text.primary */
+  --md-sys-color-surface-variant: #E7E0EC; /* Neutral variant for different surfaces */
+  --md-sys-color-on-surface-variant: #49454F; /* For text on surface-variant, similar to text.secondary */
+
+  /* Surface Container Colors (new in M3 for elevation/emphasis) */
+  --md-sys-color-surface-container-lowest: #FFFFFF; /* Was background.paper */
+  --md-sys-color-surface-container-low: #FDF8FD;    /* Slightly off-white */
+  --md-sys-color-surface-container: #F7F2F7;      /* Default container */
+  --md-sys-color-surface-container-high: #F2ECF2;   /* Higher emphasis */
+  --md-sys-color-surface-container-highest: #EDE7ED; /* Highest emphasis */
+
+  /* Outline */
+  --md-sys-color-outline: #808080; /* General outline, similar to MUI divider but might need adjustment */
+  --md-sys-color-outline-variant: #C4C4C4; /* from MUI textfield fieldset border */
+
+  /* Inverse (for dark text on light primary, etc. - not commonly needed if on-primary is white) */
+  /* --md-sys-color-inverse-primary: ... */
+  /* --md-sys-color-inverse-surface: ... */
+  /* --md-sys-color-inverse-on-surface: ... */
+
+  /* Semantic colors from MUI (can be mapped to custom properties if needed, or use MWC defaults) */
+  --custom-color-success: #36A269;
+  --custom-color-warning: #EEC200;
+
+
+  /* --- Typography System Tokens (Based on Material Design 3) --- */
+  /* Using names from https://m3.material.io/styles/typography/tokens */
+  --md-sys-typescale-font-family-brand: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --md-sys-typescale-font-family-plain: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --md-sys-typescale-body-small-font-family: var(--md-sys-typescale-font-family-plain);
+  --md-sys-typescale-body-small-font-weight: 400;
+  --md-sys-typescale-body-small-font-size: 0.75rem; /* 12px */
+  --md-sys-typescale-body-small-line-height: 1.33;
+
+  --md-sys-typescale-body-medium-font-family: var(--md-sys-typescale-font-family-plain);
+  --md-sys-typescale-body-medium-font-weight: 400;
+  --md-sys-typescale-body-medium-font-size: 0.875rem; /* 14px - MUI base fontSize */
+  --md-sys-typescale-body-medium-line-height: 1.43;
+
+  --md-sys-typescale-body-large-font-family: var(--md-sys-typescale-font-family-plain);
+  --md-sys-typescale-body-large-font-weight: 400; /* MUI body1 */
+  --md-sys-typescale-body-large-font-size: 0.875rem; /* MUI body1 (14px) */
+  --md-sys-typescale-body-large-line-height: 1.43;
+
+  --md-sys-typescale-label-small-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-label-small-font-weight: 500;
+  --md-sys-typescale-label-small-font-size: 0.6875rem; /* 11px */
+  --md-sys-typescale-label-small-line-height: 1.45;
+
+  --md-sys-typescale-label-medium-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-label-medium-font-weight: 500;
+  --md-sys-typescale-label-medium-font-size: 0.75rem; /* 12px */
+  --md-sys-typescale-label-medium-line-height: 1.33;
+
+  --md-sys-typescale-label-large-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-label-large-font-weight: 500;
+  --md-sys-typescale-label-large-font-size: 0.875rem; /* 14px */
+  --md-sys-typescale-label-large-line-height: 1.43;
+
+  --md-sys-typescale-title-small-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-title-small-font-weight: 500;
+  --md-sys-typescale-title-small-font-size: 0.875rem; /* 14px */
+  --md-sys-typescale-title-small-line-height: 1.43;
+
+  --md-sys-typescale-title-medium-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-title-medium-font-weight: 600; /* MUI h4 */
+  --md-sys-typescale-title-medium-font-size: 1rem; /* MUI h4 (16px) */
+  --md-sys-typescale-title-medium-line-height: 1.5;
+
+  --md-sys-typescale-title-large-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-title-large-font-weight: 600; /* MUI h3 */
+  --md-sys-typescale-title-large-font-size: 1.125rem; /* MUI h3 (18px) */
+  --md-sys-typescale-title-large-line-height: 1.55;
+
+  --md-sys-typescale-headline-small-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-headline-small-font-weight: 600; /* MUI h2 */
+  --md-sys-typescale-headline-small-font-size: 1.25rem; /* MUI h2 (20px) */
+  --md-sys-typescale-headline-small-line-height: 1.6;
+
+  --md-sys-typescale-headline-medium-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-headline-medium-font-weight: 600;
+  --md-sys-typescale-headline-medium-font-size: 1.5rem; /* 24px */
+  --md-sys-typescale-headline-medium-line-height: 1.5;
+
+  --md-sys-typescale-headline-large-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-headline-large-font-weight: 600;
+  --md-sys-typescale-headline-large-font-size: 1.75rem; /* 28px */
+  --md-sys-typescale-headline-large-line-height: 1.43;
+
+  --md-sys-typescale-display-small-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-display-small-font-weight: 600; /* MUI h1 */
+  --md-sys-typescale-display-small-font-size: 1.75rem; /* MUI h1 (28px) - MWC display small is usually larger, adjust if needed */
+  --md-sys-typescale-display-small-line-height: 1.43;
+
+  --md-sys-typescale-display-medium-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-display-medium-font-weight: 600;
+  --md-sys-typescale-display-medium-font-size: 2.8125rem; /* 45px */
+  --md-sys-typescale-display-medium-line-height: 1.15;
+
+  --md-sys-typescale-display-large-font-family: var(--md-sys-typescale-font-family-brand);
+  --md-sys-typescale-display-large-font-weight: 600;
+  --md-sys-typescale-display-large-font-size: 3.5625rem; /* 57px */
+  --md-sys-typescale-display-large-line-height: 1.12;
+
+  /* --- Shape System Tokens --- */
+  /* General shape tokens for corners */
+  --md-sys-shape-corner-none: 0px;
+  --md-sys-shape-corner-extra-small: 4px;
+  --md-sys-shape-corner-small: 8px;
+  --md-sys-shape-corner-medium: 12px; /* Default for many components */
+  --md-sys-shape-corner-large: 16px;
+  --md-sys-shape-corner-extra-large: 28px;
+  --md-sys-shape-corner-full: 9999px; /* For pills, circular elements */
+
+  /* Applying your specific borderRadius (10px) to a custom category if needed, or adjust medium. */
+  /* For now, we'll use MWC's standard scale. 10px is between small (8px) and medium (12px) */
+  /* We can override component-specific tokens later if 10px is strictly needed everywhere. */
+  /* Example: --md-ref-shape-corner-medium: 10px; if you want to change the default medium */
+   --md-sys-shape-corner-medium: 10px; /* Overriding MWC medium to match MUI borderRadius */
+
+
+  /* --- Default body styles --- */
+  body {
+    font-family: var(--md-sys-typescale-body-large-font-family);
+    font-size: var(--md-sys-typescale-body-large-font-size);
+    line-height: var(--md-sys-typescale-body-large-line-height);
+    font-weight: var(--md-sys-typescale-body-large-font-weight);
+    background-color: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-background);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Apply some default styles to MWC components if necessary, */
+  /* though they should pick up these tokens automatically. */
+  /* Example for a button (actual MWC components might have their own token names to override) */
+  /*
+  md-filled-button {
+    --md-filled-button-container-shape: var(--md-sys-shape-corner-medium);
+    --md-filled-button-label-text-font: var(--md-sys-typescale-label-large-font-family);
+  }
+  */
+}
