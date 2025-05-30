@@ -3,7 +3,7 @@ import { Box, Typography } from '@mui/material';
 import AppCard from '../atoms/AppCard';
 
 const Page = ({ title, actions, children }) => (
-  <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+  <Box>
     <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
       {title}
     </Typography>
