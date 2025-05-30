@@ -1,5 +1,6 @@
-import React from 'react';
-import { AppBar, Drawer, Toolbar, Typography, List, ListItem, ListItemIcon, ListItemText, Box, ListItemButton } from '@mui/material';
+import React, { useState } from 'react';
+import { AppBar, Drawer, Toolbar, Typography, List, ListItem, ListItemIcon, ListItemText, Box, ListItemButton, IconButton, useMediaQuery } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import AppTooltip from '../atoms/AppTooltip';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import PeopleIcon from '@mui/icons-material/People';
@@ -10,6 +11,14 @@ const drawerWidth = 240;
 
 const Layout = ({ children }) => {
   const location = useLocation();
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const currentDrawerWidth = isMobile ? 200 : drawerWidth;
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
     <Box sx={{ display: 'flex' }}>
       {/* CssBaseline is now in App.js, applied globally */}
@@ -25,6 +34,16 @@ const Layout = ({ children }) => {
         elevation={0}
       >
         <Toolbar sx={{ minHeight: 56, display: 'flex', justifyContent: 'space-between' }}>
+          {isMobile && (
+            <IconButton
+              color="inherit"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 1 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
           <Typography variant="h6" noWrap component="div">
             ERP Dashboard
           </Typography>
@@ -34,14 +53,15 @@ const Layout = ({ children }) => {
         </Toolbar>
       </AppBar>
       <Drawer
-        variant="persistent"
+        variant={isMobile ? 'temporary' : 'persistent'}
         anchor="left"
-        open={true}
+        open={isMobile ? mobileOpen : true}
+        onClose={handleDrawerToggle}
         sx={(theme) => ({
-          width: drawerWidth,
+          width: currentDrawerWidth,
           flexShrink: 0,
           '& .MuiDrawer-paper': {
-            width: drawerWidth,
+            width: currentDrawerWidth,
             boxSizing: 'border-box',
             backgroundColor: theme.palette.background.default,
             borderRight: `1px solid ${theme.palette.divider}`,
@@ -54,6 +74,7 @@ const Layout = ({ children }) => {
             <ListItem disablePadding component={Link} to="/tiendas" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <AppTooltip title="Tiendas" placement="right">
               <ListItemButton
+                onClick={isMobile ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/tiendas'}
                 sx={(theme) => ({
                   '&:hover': { backgroundColor: theme.palette.action.hover },
@@ -73,6 +94,7 @@ const Layout = ({ children }) => {
             <ListItem disablePadding component={Link} to="/usuarios" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <AppTooltip title="Usuarios" placement="right">
               <ListItemButton
+                onClick={isMobile ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/usuarios'}
                 sx={(theme) => ({
                   '&:hover': { backgroundColor: theme.palette.action.hover },
@@ -92,6 +114,7 @@ const Layout = ({ children }) => {
             <ListItem disablePadding component={Link} to="/clientes" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
               <AppTooltip title="Clientes" placement="right">
               <ListItemButton
+                onClick={isMobile ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/clientes'}
                 sx={(theme) => ({
                   '&:hover': { backgroundColor: theme.palette.action.hover },
@@ -118,7 +141,7 @@ const Layout = ({ children }) => {
           bgcolor: theme.palette.background.default,
           pt: 3,
           pb: 3,
-          px: '10%',
+          px: { xs: 2, sm: 3, md: '10%' },
           animation: 'fadeIn 0.5s ease-in-out',
         })}
       >
