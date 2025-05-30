@@ -10,8 +10,8 @@ const SecondaryButton = ({ children, ...props }) => (
       borderRadius: 4,
       textTransform: 'none',
       fontWeight: 600,
-      height: 32,
-      px: 2,
+      height: 28,
+      px: '12px',
       ...props.sx,
     }}
   >

@@ -8,22 +8,29 @@ const HeaderSearchBar = ({ placeholder = 'Buscar', ...props }) => (
     sx={{
       display: 'flex',
       alignItems: 'center',
-      width: { xs: '100%', sm: 280, md: 650 },
+      width: { xs: '100%', sm: 480 },
       height: 32,
       px: 1,
-      borderRadius: 16,
-      backgroundColor: 'rgba(48,48,48,0.8)',
-      color: '#FFFFFF',
+      borderRadius: 8,
+      backgroundColor: '#FFFFFF',
+      color: 'text.primary',
       ...props.sx,
     }}
   >
-    <SearchIcon sx={{ mr: 1 }} />
+    <SearchIcon sx={{ mr: 1, color: 'text.secondary', fontSize: 20 }} />
     <TextInput
       fullWidth
       placeholder={placeholder}
       InputProps={{
         disableUnderline: true,
-        sx: { color: '#FFFFFF', '& .MuiOutlinedInput-notchedOutline': { border: 0 } },
+        sx: {
+          color: 'text.primary',
+          '& .MuiOutlinedInput-notchedOutline': { border: 0 },
+          '& input::placeholder': {
+            color: 'text.placeholder',
+            opacity: 1,
+          },
+        },
       }}
       {...props}
     />
