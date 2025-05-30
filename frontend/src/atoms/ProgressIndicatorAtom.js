@@ -1,8 +1,6 @@
 import React from 'react';
-import { MdLinearProgress } from '@material/web/progress/md-linear-progress.js';
-import { MdCircularProgress } from '@material/web/progress/md-circular-progress.js';
-import Typography from '@mui/material/Typography'; // Keep for now
-import Box from '@mui/material/Box'; // Keep for now
+import { MdLinearProgress } from '@material/web/progress/linear-progress.js'; // Corrected import path
+import { MdCircularProgress } from '@material/web/progress/circular-progress.js'; // Corrected import path
 
 const ProgressIndicatorAtom = ({
   type = 'linear',
@@ -12,7 +10,7 @@ const ProgressIndicatorAtom = ({
   size, // Applicable for CircularProgress (MUI: number, MWC: CSS var --md-circular-progress-size)
   thickness, // Applicable for CircularProgress (MUI: number, MWC: CSS var --md-circular-progress-active-indicator-width)
   showLabel = false,
-  sx, // sx from props, to be applied as style if possible
+  style, // Changed from sx to style for standard HTML attributes
   ...props // other props
 }) => {
   const isDeterminate = variant === 'determinate' && value != null;
@@ -20,76 +18,97 @@ const ProgressIndicatorAtom = ({
   const mwcValue = isDeterminate ? value / 100 : undefined;
 
   // Define styles for MWC components based on props
-  const mwcStyle = { ...sx }; // Start with sx from props
+  const mwcComponentStyle = {}; // Separate style for the MWC component itself
+  // Apply color to MWC component
   if (color === 'secondary') {
-    // This is a simplification. Ideally, use theme variables.
-    mwcStyle['--md-sys-color-primary'] = '#2C6ECB'; // Secondary color from guidelines
-    // Or more specific:
-    // mwcStyle['--md-linear-progress-active-indicator-color'] = '#2C6ECB';
-    // mwcStyle['--md-circular-progress-active-indicator-color'] = '#2C6ECB';
+    mwcComponentStyle['--md-sys-color-primary'] = 'var(--mwc-theme-secondary, #2C6ECB)';
   }
 
+  const labelStyle = {
+    fontSize: type === 'circular' ? '0.75rem' : '0.875rem', // caption for circular, body2 for linear
+    color: 'var(--mwc-theme-on-surface-variant, #6D7175)', // text.secondary
+    fontFamily: 'var(--mwc-theme-font-family, Inter, sans-serif)',
+  };
+
   if (type === 'linear') {
+    const linearContainerStyle = {
+      display: 'flex',
+      alignItems: 'center',
+      width: '100%',
+      ...style, // Apply passed 'style' to the outer container
+    };
+    const progressWrapperStyle = {
+      width: '100%',
+      marginRight: displayLabel ? '8px' : '0', // MUI mr: 1 is 8px with default 8px spacing
+    };
+    const labelContainerStyle = {
+      minWidth: '35px', // From original Box
+    };
+
     return (
-      <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-        <Box sx={{ width: '100%', mr: displayLabel ? 1 : 0 }}>
+      <div style={linearContainerStyle}>
+        <div style={progressWrapperStyle}>
           <MdLinearProgress
             value={mwcValue}
             indeterminate={!isDeterminate}
-            style={mwcStyle}
+            style={mwcComponentStyle} // Apply color overrides here
             {...props}
           />
-        </Box>
+        </div>
         {displayLabel && (
-          <Box sx={{ minWidth: 35 }}>
-            <Typography variant="body2" color="text.secondary">{`${Math.round(
-              value || 0, // Ensure value is not null for Math.round
-            )}%`}</Typography>
-          </Box>
+          <div style={labelContainerStyle}>
+            <span style={labelStyle}>{`${Math.round(
+              value || 0,
+            )}%`}</span>
+          </div>
         )}
-      </Box>
+      </div>
     );
   }
 
   if (type === 'circular') {
-    const circularStyle = { ...mwcStyle };
+    const circularContainerStyle = {
+      position: 'relative',
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      ...style, // Apply passed 'style' to the outer container
+    };
+
+    // Combine mwcComponentStyle with size/thickness for the MWC component
+    const circularComponentActualStyle = { ...mwcComponentStyle };
     if (size) {
-      circularStyle['--md-circular-progress-size'] = typeof size === 'number' ? `${size}px` : size;
+      circularComponentActualStyle['--md-circular-progress-size'] = typeof size === 'number' ? `${size}px` : size;
     }
     if (thickness) {
-      // MWC default is 4px. MUI default is 3.6px.
-      circularStyle['--md-circular-progress-active-indicator-width'] = typeof thickness === 'number' ? `${thickness}px` : thickness;
+      circularComponentActualStyle['--md-circular-progress-active-indicator-width'] = typeof thickness === 'number' ? `${thickness}px` : thickness;
     }
 
+    const circularLabelOuterStyle = {
+      position: 'absolute',
+      top: '0',
+      left: '0',
+      bottom: '0',
+      right: '0',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    };
+
     return (
-      <Box sx={{ position: 'relative', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={circularContainerStyle}>
         <MdCircularProgress
           value={mwcValue}
           indeterminate={!isDeterminate}
-          style={circularStyle}
+          style={circularComponentActualStyle} // Apply color, size, thickness here
           {...props}
         />
         {displayLabel && (
-          <Box
-            sx={{
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-              position: 'absolute',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Typography
-              variant="caption"
-              component="div"
-              color="text.secondary"
-            >{`${Math.round(value || 0)}%`}</Typography> {/* Ensure value is not null */}
-          </Box>
+          <div style={circularLabelOuterStyle}>
+            <span style={labelStyle}>{`${Math.round(value || 0)}%`}</span>
+          </div>
         )}
-      </Box>
+      </div>
     );
   }
 

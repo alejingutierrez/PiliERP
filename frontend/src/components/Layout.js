@@ -1,168 +1,161 @@
-import React, { useState } from 'react';
-import {
-  AppBar,
-  Drawer,
-  Toolbar,
-  Typography,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Box,
-  ListItemButton,
-  IconButton,
-  useMediaQuery,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import SearchIcon from '@mui/icons-material/Search';
-import Avatar from '@mui/material/Avatar';
-import AppTooltip from '../atoms/AppTooltip';
-import StorefrontOutlinedIcon from '@mui/icons-material/StorefrontOutlined';
-import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import HeaderSearchBar from '../molecules/HeaderSearchBar';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+// MWC imports - consider using individual component imports for production
+import '@material/web/all.js';
+// If specific components are preferred:
+// import '@material/web/topappbar/top-app-bar.js';
+// import '@material/web/iconbutton/icon-button.js';
+// import '@material/web/icon/icon.js';
+// import '@material/web/navigationdrawer/navigation-drawer.js';
+// import '@material/web/list/list.js';
+// import '@material/web/list/list-item.js';
+
+// Custom components (ensure they don't rely on MUI)
+import HeaderSearchBar from '../molecules/HeaderSearchBar';
+// AppTooltip might need replacement or removal if MUI-dependent
+// import AppTooltip from '../atoms/AppTooltip';
+
 const drawerWidth = 240;
+const collapsedDrawerWidth = 72;
 
 const Layout = ({ children }) => {
   const location = useLocation();
-  const isOverlay = useMediaQuery('(max-width:768px)');
-  const isCollapsed = useMediaQuery('(max-width:1024px)');
+  const [isOverlay, setIsOverlay] = useState(window.matchMedia('(max-width:768px)').matches);
+  const [isCollapsed, setIsCollapsed] = useState(window.matchMedia('(max-width:1024px)').matches);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const currentDrawerWidth = isCollapsed ? 72 : drawerWidth;
+
+  const drawerRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsOverlay(window.matchMedia('(max-width:768px)').matches);
+      setIsCollapsed(window.matchMedia('(max-width:1024px)').matches);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    if (isOverlay && drawerRef.current) {
+      drawerRef.current.opened = !drawerRef.current.opened;
+      setMobileOpen(drawerRef.current.opened);
+    }
   };
 
+  const currentDrawerWidth = isCollapsed ? collapsedDrawerWidth : drawerWidth;
+
+  // Styles (replace sx prop with inline styles or CSS classes)
+  const layoutStyle = {
+    display: 'flex',
+    minHeight: '100vh', // Ensure layout takes full height
+  };
+
+  const topAppBarStyle = {
+    '--md-sys-color-surface': 'var(--mwc-theme-surface)', // Use MWC theme variables
+    '--md-sys-color-on-surface': 'var(--mwc-theme-on-surface)',
+    borderBottom: '1px solid var(--mwc-theme-outline-variant)',
+    minHeight: '56px',
+    position: 'fixed', // Replicates position="fixed"
+    width: '100%', // Ensure it spans the full width
+    zIndex: 1100, // Typically higher than drawer
+  };
+
+  const mainContentStyle = {
+    flexGrow: 1,
+    backgroundColor: 'var(--mwc-theme-background)', // Use MWC theme variables
+    paddingTop: '56px', // Account for fixed top-app-bar height
+    paddingLeft: isOverlay ? '0px' : `${currentDrawerWidth}px`, // Adjust based on drawer
+    paddingBottom: '32px',
+    paddingRight: '16px',
+    maxWidth: '1440px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    boxSizing: 'border-box',
+    transition: 'padding-left 0.3s ease-in-out', // Smooth transition for drawer
+  };
+
+  const drawerStyle = {
+    width: `${currentDrawerWidth}px`,
+    flexShrink: 0,
+    '--md-navigation-drawer-container-color': 'var(--mwc-theme-surface-container-low)',
+    borderRight: '1px solid var(--mwc-theme-outline-variant)',
+    // position: isOverlay ? 'fixed' : 'relative', // MWC drawer handles this
+    // zIndex: isOverlay ? 1200 : 1000,
+  };
+
+  const navItems = [
+    { text: 'Tiendas', icon: 'storefront', path: '/tiendas' },
+    { text: 'Usuarios', icon: 'people', path: '/usuarios' },
+    { text: 'Clientes', icon: 'person', path: '/clientes' },
+  ];
+
   return (
-    <Box sx={{ display: 'flex' }}>
-      {/* CssBaseline is now in App.js, applied globally */}
-      <AppBar
-        position="fixed"
-        sx={(theme) => ({
-          zIndex: theme.zIndex.drawer + 1,
-          backgroundColor: theme.palette.background.header,
-          color: theme.palette.text.primary,
-          borderBottom: `1px solid ${theme.palette.divider}`,
-          minHeight: 56,
-        })}
-        elevation={1}
-      >
-        <Toolbar sx={{ minHeight: 56, px: 2 }}>
-          {isOverlay && (
-            <IconButton
-              color="inherit"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 1 }}
-            >
-              <MenuIcon />
-            </IconButton>
+    <div style={layoutStyle}>
+      <md-top-app-bar style={topAppBarStyle}>
+        <div slot="headline" style={{fontSize: '14px', fontWeight: '600'}}>ERP Dashboard</div>
+        {isOverlay && (
+          <md-icon-button slot="navigationIcon" onClick={handleDrawerToggle}>
+            <md-icon>menu</md-icon>
+          </md-icon-button>
+        )}
+        <div style={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          {!isCollapsed && <HeaderSearchBar />} {/* Ensure HeaderSearchBar is MWC compatible */}
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} slot="actionItems">
+          {isCollapsed && !isOverlay && (
+            <md-icon-button>
+              <md-icon>search</md-icon>
+            </md-icon-button>
           )}
-          <Typography variant="subtitle1" noWrap component="div" sx={{ fontWeight: 600, fontSize: 14 }}>
-            ERP Dashboard
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center' }}>
-            {!isCollapsed && <HeaderSearchBar />}
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            {isCollapsed && (
-              <IconButton color="inherit" sx={{ ml: 1 }}>
-                <SearchIcon sx={{ fontSize: 20 }} />
-              </IconButton>
-            )}
-            <IconButton color="inherit" sx={{ ml: 1 }}>
-              <MailOutlineIcon sx={{ fontSize: 20 }} />
-            </IconButton>
-            <IconButton color="inherit" sx={{ ml: 1 }}>
-              <NotificationsNoneIcon sx={{ fontSize: 20 }} />
-            </IconButton>
-            <Avatar sx={{ ml: 1, width: 28, height: 28 }}>A</Avatar>
-          </Box>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant={isOverlay ? 'temporary' : 'persistent'}
-        anchor="left"
-        open={isOverlay ? mobileOpen : true}
-        onClose={handleDrawerToggle}
-        sx={(theme) => ({
-          width: currentDrawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: currentDrawerWidth,
-            boxSizing: 'border-box',
-            backgroundColor: theme.palette.background.sidebar,
-            borderRight: `1px solid ${theme.palette.divider}`,
-          },
-        })}
+          <md-icon-button>
+            <md-icon>mail_outline</md-icon>
+          </md-icon-button>
+          <md-icon-button>
+            <md-icon>notifications_none</md-icon>
+          </md-icon-button>
+          {/* Basic Avatar replacement */}
+          <div style={{
+            width: '28px', height: '28px', borderRadius: '50%',
+            backgroundColor: 'var(--mwc-theme-primary)', color: 'var(--mwc-theme-on-primary)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '14px', marginLeft: '8px'
+          }}>A</div>
+        </div>
+      </md-top-app-bar>
+
+      <md-navigation-drawer
+        ref={drawerRef}
+        type={isOverlay ? 'modal' : ''} // 'modal' for temporary, default (empty) for persistent like behavior
+        opened={isOverlay ? mobileOpen : true}
+        style={drawerStyle}
+        onOpened={() => setMobileOpen(true)}
+        onClosed={() => setMobileOpen(false)}
       >
-        <Toolbar /> {/* Necessary for content to be below app bar */}
-        <Box sx={{ overflow: 'auto' }}>
-          <List>
-            <ListItem disablePadding component={Link} to="/tiendas" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
-              <AppTooltip title="Tiendas" placement="right">
-              <ListItemButton
-                onClick={isOverlay ? handleDrawerToggle : undefined}
-                selected={location.pathname === '/tiendas'}
+        <div style={{height: '56px'}}></div> {/* Spacer for top-app-bar */}
+        <md-list>
+          {navItems.map((item) => (
+            // AppTooltip removed for now. MWC tooltips can be added later if needed.
+            // e.g. <md-list-item title={item.text}>
+            <Link key={item.path} to={item.path} style={{ textDecoration: 'none' }} onClick={isOverlay ? handleDrawerToggle : undefined}>
+              <md-list-item
+                type="button"
+                headline={item.text}
+                activated={location.pathname === item.path}
+                style={isCollapsed && !isOverlay ? { '--md-list-item-label-text-font-size': '0px' } : {}}
               >
-              <ListItemIcon sx={{ color: location.pathname === '/tiendas' ? 'primary.main' : 'text.secondary' }}>
-                  <StorefrontOutlinedIcon />
-              </ListItemIcon>
-                <ListItemText primary="Tiendas" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
-              </ListItemButton>
-              </AppTooltip>
-            </ListItem>
-            <ListItem disablePadding component={Link} to="/usuarios" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
-              <AppTooltip title="Usuarios" placement="right">
-              <ListItemButton
-                onClick={isOverlay ? handleDrawerToggle : undefined}
-                selected={location.pathname === '/usuarios'}
-              >
-                <ListItemIcon sx={{ color: location.pathname === '/usuarios' ? 'primary.main' : 'text.secondary' }}>
-                  <PeopleOutlineIcon />
-                </ListItemIcon>
-                <ListItemText primary="Usuarios" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
-              </ListItemButton>
-              </AppTooltip>
-            </ListItem>
-            <ListItem disablePadding component={Link} to="/clientes" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
-              <AppTooltip title="Clientes" placement="right">
-              <ListItemButton
-                onClick={isOverlay ? handleDrawerToggle : undefined}
-                selected={location.pathname === '/clientes'}
-              >
-                <ListItemIcon sx={{ color: location.pathname === '/clientes' ? 'primary.main' : 'text.secondary' }}>
-                  <PersonOutlineIcon />
-                </ListItemIcon>
-                <ListItemText primary="Clientes" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
-              </ListItemButton>
-              </AppTooltip>
-            </ListItem>
-          </List>
-        </Box>
-      </Drawer>
-      <Box
-        component="main"
-        sx={(theme) => ({
-          flexGrow: 1,
-          bgcolor: theme.palette.background.default,
-          pt: 3,
-          pb: 8,
-          px: 4,
-          maxWidth: 1440,
-          mx: 'auto',
-          animation: 'fadeIn 0.5s ease-in-out',
-        })}
-      >
-        <Toolbar /> {/* Necessary for content to be below app bar */}
+                <md-icon slot="start">{item.icon}</md-icon>
+                {!isCollapsed && item.text}
+              </md-list-item>
+            </Link>
+          ))}
+        </md-list>
+      </md-navigation-drawer>
+
+      <main style={mainContentStyle}>
+         {/* Toolbar spacer is handled by paddingTop in mainContentStyle */}
         {children}
-      </Box>
-    </Box>
+      </main>
+    </div>
   );
 };
 

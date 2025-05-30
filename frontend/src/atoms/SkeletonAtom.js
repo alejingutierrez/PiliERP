@@ -1,10 +1,20 @@
 import React from 'react';
-import MuiSkeleton from '@mui/material/Skeleton';
-import { useTheme } from '@mui/material/styles';
 
-// No specific styling needed with `styled` for this atom initially,
-// as MUI Skeleton handles props directly and themes accordingly.
-// The 'rounded' variant is available in MUI v5+.
+// Keyframes for animations
+const pulseKeyframes = `
+  @keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+  }
+`;
+
+const waveKeyframes = `
+  @keyframes wave {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+`;
 
 const SkeletonAtom = ({
   variant = 'text', // 'text', 'circular', 'rectangular', 'rounded'
@@ -12,37 +22,96 @@ const SkeletonAtom = ({
   height,
   animation = 'pulse', // 'pulse', 'wave', false
   fontSize, // For text variant, influences height if height not set
-  ...props // To pass any other valid MuiSkeleton props
+  style: userStyle, // Renamed from sx to style
+  className,
+  count = 1, // Number of skeleton lines for text variant
+  ...props
 }) => {
-  const theme = useTheme();
-  let sx = { ...props.sx }; // Preserve any sx prop passed by the user
+  const baseStyle = {
+    backgroundColor: 'var(--mwc-theme-surface-variant, rgba(0,0,0,0.11))', // Default skeleton color
+    display: 'block', // Default display
+  };
 
-  if (variant === 'text' && fontSize) {
-    // MUI Skeleton text variant by default infers its height from the surrounding typography.
-    // If an explicit fontSize is given and height is not, we can set it.
-    // However, MUI's <Skeleton variant="text" /> already does a good job adapting.
-    // Explicitly setting height via sx if fontSize is provided and height isn't might be redundant
-    // or could conflict if not handled carefully.
-    // For now, we'll let MUI handle text height inference. If more control is needed,
-    // this is where it would be added.
-    // sx.fontSize = fontSize; // This would set font-size of the skeleton itself if it rendered text
+  if (animation === 'pulse') {
+    baseStyle.animation = 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite';
+  } else if (animation === 'wave') {
+    baseStyle.position = 'relative';
+    baseStyle.overflow = 'hidden';
+    // Wave effect often uses a pseudo-element for the moving gradient
+    // This is a simplified inline style version, a pseudo-element would be better.
+    // For a true wave, you'd add a ::after element with a gradient and animate its transform.
+    // This simplified version just adds a placeholder to indicate 'wave' was selected.
+    baseStyle.setProperty('--wave-gradient', 'linear-gradient(90deg, transparent, rgba(0,0,0,0.08), transparent)');
+    baseStyle.backgroundRepeat = 'no-repeat';
+    baseStyle.backgroundSize = '200px 100%'; // Adjust size of wave
+    baseStyle.animation = 'wave 2s linear infinite'; // Placeholder, real wave needs ::after
   }
 
-  // If 'rounded' variant wasn't available, we'd do something like:
-  // if (variant === 'rectangular' && props.rounded) { // Assuming a custom 'rounded' prop
-  //   sx.borderRadius = theme.shape.borderRadius;
-  // }
-  // But since 'rounded' is a standard variant in MUI v5+, this is not needed.
+
+  let finalStyle = { ...baseStyle };
+
+  if (variant === 'text') {
+    finalStyle.height = height || fontSize || '1em'; // Default height for text
+    finalStyle.marginTop = '0.2em';
+    finalStyle.marginBottom = '0.2em';
+    if (!width) { // Typical text skeleton behavior
+        finalStyle.width = '100%';
+        // For multiple lines, the last line is often shorter
+        // This will be handled by the loop rendering multiple skeletons
+    } else {
+        finalStyle.width = width;
+    }
+    // 'text' often implies rounded ends, but not as much as 'rounded' variant
+    finalStyle.borderRadius = 'var(--md-sys-shape-corner-extra-small, 4px)';
+  } else if (variant === 'circular') {
+    finalStyle.width = width || height || '40px'; // Default size for circular
+    finalStyle.height = height || width || '40px';
+    finalStyle.borderRadius = '50%';
+  } else if (variant === 'rectangular') {
+    finalStyle.width = width || '100%';
+    finalStyle.height = height || '100%';
+    // No specific borderRadius for rectangular
+  } else if (variant === 'rounded') {
+    finalStyle.width = width || '100%';
+    finalStyle.height = height || '100%';
+    finalStyle.borderRadius = 'var(--md-sys-shape-corner-medium, 12px)'; // More pronounced rounding
+  }
+
+  finalStyle = { ...finalStyle, ...userStyle }; // Allow user to override
+
+  const renderSkeletons = () => {
+    if (variant === 'text' && count > 1) {
+      return Array.from({ length: count }).map((_, index) => {
+        const lineStyle = {...finalStyle};
+        if (index === count - 1 && count > 1 && (!width || width === '100%')) { // Last line is shorter
+          lineStyle.width = '60%';
+        }
+        // Add a small gap between text lines
+        if (index > 0) lineStyle.marginTop = '0.5em';
+        return (
+          <div
+            key={index}
+            style={lineStyle}
+            className={`skeleton-atom ${className || ''}`}
+            {...props}
+          />
+        );
+      });
+    }
+    return (
+      <div
+        style={finalStyle}
+        className={`skeleton-atom ${className || ''}`}
+        {...props}
+      />
+    );
+  };
 
   return (
-    <MuiSkeleton
-      variant={variant}
-      width={width}
-      height={height}
-      animation={animation}
-      sx={sx}
-      {...props}
-    />
+    <>
+      <style>{pulseKeyframes}{waveKeyframes}</style> {/* Inject keyframes */}
+      {renderSkeletons()}
+    </>
   );
 };
 
