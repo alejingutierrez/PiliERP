@@ -9,7 +9,15 @@ const Page = ({ title, actions, children }) => (
     </Typography>
     <AppCard>
       {actions && (
-        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
+            justifyContent: 'flex-end',
+            mb: 2,
+            '& > *': { mr: { sm: 1 }, mb: { xs: 1, sm: 0 } },
+          }}
+        >
           {actions}
         </Box>
       )}
