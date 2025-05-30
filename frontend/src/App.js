@@ -13,6 +13,8 @@ import DashboardCard from './components/DashboardCard';
 import TiendasPage from './pages/TiendasPage';
 import UsuariosPage from './pages/UsuariosPage';
 import ClientesPage from './pages/ClientesPage';
+import MaterialCardTestPage from './pages/MaterialCardTestPage';
+import DashboardPage from './pages/DashboardPage';
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
             <Route path="/tiendas" element={<TiendasPage />} />
             <Route path="/usuarios" element={<UsuariosPage />} />
             <Route path="/clientes" element={<ClientesPage />} />
+            <Route path="/test-material-card" element={<MaterialCardTestPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/" element={
               <Box sx={{ p: 3 }}>
                 <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
