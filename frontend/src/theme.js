@@ -6,7 +6,7 @@ const theme = createTheme({
       main: '#2c6ecb',
     },
     secondary: {
-      main: '#50b83c',
+      main: '#008060',
     },
     background: {
       default: '#f4f6f8',
@@ -19,7 +19,8 @@ const theme = createTheme({
     divider: '#dfe3e8',
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: 'Inter, sans-serif',
+    fontSize: 14,
     h1: {
       fontWeight: 700,
       fontSize: '2.25rem',
@@ -63,13 +64,13 @@ const theme = createTheme({
     },
   },
   shape: {
-    borderRadius: 8,
+    borderRadius: 4,
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 8,
+          borderRadius: 4,
           textTransform: 'none',
         },
       },
