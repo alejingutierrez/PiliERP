@@ -64,6 +64,6 @@ The frontend follows Atomic Design principles:
 - `src/atoms`: Basic UI elements.
 - `src/molecules`: Combinations of atoms.
 - `src/organisms`: Complex UI components.
-- `src/templates`: Page layouts.
-- `src/pages`: Concrete pages made from templates and organisms.
-- `src/components`: Shared/layout components.
+- `src/templates`: Common page layouts (e.g. `Page`).
+- `src/pages`: Concrete pages built from templates and molecules.
+- `src/components`: Shared layout components.
