@@ -38,7 +38,7 @@ const TextInput = ({
   // If the user also provides an `onInput` prop to this TextInput, it will also be called.
   const handleInput = (event) => {
     if (onChange) {
-      onChange(event); // Call the user's onChange for controlled behavior
+      onChange(event.target.value); // Call the user's onChange for controlled behavior
     }
     if (onInput) {
       onInput(event); // Call the user's onInput if they provided one
@@ -62,14 +62,6 @@ const TextInput = ({
       // Event handling:
       // Connect our combined handler to the wrapper's onInput (which is MWC 'input' event)
       onInput={handleInput}
-      // If the user wants to specifically listen to MWC's 'change' event (on blur/enter),
-      // they can pass it as props.onChange directly to MWCOutlinedTextField via {...props}
-      // However, our wrapper already maps 'change' to 'onChange'.
-      // To avoid confusion, we explicitly don't pass this.props.onChange if it's the same as our main onChange.
-      // If they pass a different onChange in ...props, it might override or cause issues.
-      // For clarity, it's better if this component defines what its props do.
-      // The MWCOutlinedTextField wrapper has `onChange` for the 'change' event.
-      // We will not use it here to avoid confusion with this component's `onChange` for controlled input.
       {...props} // Pass other MWC-specific props
     >
       {/* Example of how icons could be passed if this component supported them: */}
