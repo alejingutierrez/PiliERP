@@ -1,18 +1,16 @@
 import React from 'react';
-import { Paper, Typography, Box } from '@mui/material';
+import { Typography, Box } from '@mui/material';
+import AppCard from '../atoms/AppCard';
 import AppTooltip from '../atoms/AppTooltip';
 
 const DashboardCard = ({ title, description, icon: Icon }) => (
   <AppTooltip title={description} placement="top">
-    <Paper
+    <AppCard
       sx={(theme) => ({
         p: 2,
         display: 'flex',
         flexDirection: 'column',
         height: 180,
-        borderRadius: theme.shape.borderRadius,
-        boxShadow: theme.shadows[1],
-        border: `1px solid ${theme.palette.divider}`,
         cursor: 'pointer',
         transition: 'box-shadow 0.2s',
         '&:hover': {
@@ -29,7 +27,7 @@ const DashboardCard = ({ title, description, icon: Icon }) => (
       <Typography variant="body2" color="text.secondary">
         {description}
       </Typography>
-    </Paper>
+    </AppCard>
   </AppTooltip>
 );
 
