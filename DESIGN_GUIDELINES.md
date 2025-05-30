@@ -1,69 +1,90 @@
-# Guía de diseño
+# ERP Visual Design Guidelines
 
-Este documento resume los lineamientos visuales y de interacción para la interfaz del proyecto. Siguen la paleta y la tipografía de Shopify Polaris.
+This document outlines the core visual design principles and specifications for the ERP application frontend. Adhering to these guidelines will ensure a consistent and polished user experience.
 
-## 1. Barra superior
-- Altura fija de **56 px**.
-- Fondo `#1C1C1C` y contenido en blanco.
-- Logotipo o nombre alineado a la izquierda en peso **600** y tamaño **14 px**.
-- Campo de búsqueda centrado, ancho máximo **480 px**, bordes `8 px` y _placeholder_ gris `#6D7175`.
-- Íconos de notificación y usuario a la derecha, de **20 px**.
-- Animación para el buscador: `cubic-bezier(0.25,0.8,0.4,1)` en **150 ms**.
+## 1. Color Palette
 
-## 2. Navegación lateral
-- Ancho fijo de **240 px** en escritorio.
-- Fondo `#FFFFFF` y separador vertical `1 px #E0E0E0`.
-- Cada ítem mide **32 px** de alto con `padding-x` de **16 px**; ícono de **16 px**.
-- Ítem activo: fondo `#F1F2F3` y borde izquierdo `2 px #2C6ECB`.
-- Agrupa ítems dejando **8 px** entre grupos.
+The color palette is defined in `frontend/src/theme.js`.
 
-## 3. Zona de trabajo
-- Fondo global `#F6F6F7`.
-- Cada tarjeta o sección usa fondo blanco, radio `8 px`, borde `1 px #E0E0E0` y sombra `0 0 0 1px rgba(0,0,0,0.05)`.
-- Espaciado interno de **24 px** y _grid_ de 12 columnas con _baseline_ de **8 px**.
+### Primary Colors
+*   **Primary Main (`primary.main`):** `#5C6AC4` (Used for primary actions, selected states, highlights)
+*   **Primary Contrast Text (`primary.contrastText`):** `#FFFFFF` (Text/icons on primary color backgrounds)
 
-## 4. Estados vacíos
-- Ilustración centrada de **64 px**.
-- Título `16 px` seminegrita y texto de apoyo `14 px` regular `#6D7175` con ancho máximo de **280 px**.
-- Botón primario verde `#008060` a **12 px** por debajo.
+### Secondary Colors
+*   **Secondary Main (`secondary.main`):** `#2C6ECB` (Used for secondary actions or alternative highlights)
+    * _Note: This was pre-existing and can be further evaluated for its role in the new Shopify-like theme._
 
-## 5. Botones y componentes
-- Primario: `#008060`, texto blanco, radio `4 px`, alto **28 px** y `padding-x` de **12 px**.
-- Secundario fantasma: borde `1 px #8C9196`, texto `#202223`, _hover_ con fondo `#F1F2F3`.
-- Badges y chips siguen la escala semántica de Polaris.
-- Escala de espaciado: 4, 8, 12, 16, 20, 24, 28 y 32 px.
+### Semantic Colors
+*   **Success (`success.main`):** `#36A269`
+*   **Warning (`warning.main`):** `#EEC200`
+*   **Error (`error.main`):** `#D82C0D`
 
-## 6. Tipografía
-- Fuente base: `-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif`.
-- Cuerpo `14 px #202223`.
-- Encabezados: `h1` de **20 px/600** y `h2` de **16 px/600**.
+### Background Colors
+*   **Default Page Background (`background.default`):** `#F4F6F8` (Used for the main background of pages)
+*   **Paper Background (`background.paper`):** `#FFFFFF` (Used for cards, drawers, dialogs, etc.)
+*   **Header Background (`background.header`):** `#FFFFFF` (Specifically for the main AppBar)
+*   **Sidebar Background (`background.sidebar`):** `#FFFFFF` (Specifically for the navigation Drawer)
 
-## 7. Animaciones y _feedback_
-- Transiciones entre **100–150 ms** usando la curva Snappy.
-- Usar *skeleton loaders* gris claro `#E3E3E3` en lugar de *spinners*.
+### Text Colors
+*   **Primary Text (`text.primary`):** `#1A1B1C` (Default text color)
+*   **Secondary Text (`text.secondary`):** `#6D7175` (For less important text, hints)
+*   **Disabled Text (`text.disabled`):** `#B4B7BA`
+*   **Placeholder Text (`text.placeholder`):** `#979797`
 
-## 8. Iconografía
-- Estilo lineal de **1.5 px** de grosor. Tamaño de **16 px** en la barra lateral y **20 px** en el encabezado.
-- Color base `#202223` y colores semánticos para los estados.
+### Action Colors
+*   **Hover (`action.hover`):** `#4755A9` (Hover state for primary elements)
 
-## 9. Modo oscuro
-- Diseñar con _tokens_ para que invertir colores sea un cambio de variables y no de componentes.
-- Mantener contraste AA (ratio 4.5:1).
+### Other
+*   **Divider (`divider`):** `#E0E0E0` (For borders, dividers)
 
-## 10. Microcopy
-- Texto en español neutro.
-- Sólo la primera palabra de cada ítem se capitaliza (ejemplo: "Productos", "Clientes").
+## 2. Typography
 
----
+Typography is managed via the `typography` object in `frontend/src/theme.js`.
 
-### Checklist rápido
-- Definir variables de color, tamaño y fuente como *tokens*.
-- Layout en cuadrícula con **header** de 56 px y **sidebar** de 240 px.
-- Aplicar la escala de espaciado de 8 px en todo el proyecto.
-- Crear componente reutilizable `Card` con los estilos del punto 3.
-- Unificar los vacíos con el patrón de estados del punto 4.
-- Emplear una librería de iconos lineales consistente.
-- Tipografía global configurada según el punto 6.
-- Variables de animación para la curva Snappy usadas en modales y desplegables.
-- Revisar contraste, foco visible y áreas clicables de al menos 44×44 px.
+*   **Font Family (`fontFamily`):** `Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`
+*   **Base Font Size (`fontSize`):** `14px` (Applied by MUI to the root)
 
+### Key Type Styles:
+*   **h1 (`variant="h1"`):** `1.5rem` (24px), `fontWeight: 600`
+*   **h2 (`variant="h2"`):** `1.25rem` (20px), `fontWeight: 600`
+*   **h4 (used for Page Titles):** `1.5rem` (effectively `h1` size, as seen in `Page.js` and `App.js`) - _Consider aliasing page titles to `h1` in theme or component for semantic correctness if `h4` is not intentional._
+*   **subtitle1 (`variant="subtitle1"`):** `1rem` (16px), `fontWeight: 600`
+*   **subtitle2 (`variant="subtitle2"`):** `0.875rem` (14px), `fontWeight: 600`
+*   **body1 (`variant="body1"`):** `0.875rem` (14px), `fontWeight: 400`
+*   **body2 (`variant="body2"`):** `0.875rem` (14px)
+*   **Button Text (`MuiButton`):** `fontWeight: 600`, `textTransform: 'none'`
+
+### Line Height
+*   A global line height of `1.5` is set on the `body` element in `frontend/src/index.css` for general text readability.
+
+## 3. Spacing
+
+*   The theme uses `spacing: 4`. This means `theme.spacing(1)` equals `4px`. Common practice is to use multiples of this unit (e.g., `theme.spacing(2)` for `8px`, `theme.spacing(4)` for `16px`).
+*   Standard padding for `AppCard` components is `theme.spacing(2.5)` (i.e., `10px`, though this was `p:2.5` which might be `2.5 * 4px = 10px` if `theme.spacing` is not used directly there, or `2.5 * default 8px spacing = 20px` if it's a direct multiplier. The `AppCard` uses `p: 2.5` which means `2.5 * theme.spacing unit`. Since spacing unit is 4, this is 10px. This should be clarified or standardized, e.g. `p: theme.spacing(2.5)` is not valid, it should be `p: 2.5` with the expectation of the spacing unit, or `padding: theme.spacing(2.5)` if it's a style override).
+    *   _Clarification: `AppCard.js` uses `p: 2.5`. With `theme.spacing: 4`, this means `2.5 * 4px = 10px`. This is a bit unusual. Standard MUI practice is `theme.spacing(integer)`. Let's assume it means `10px` for now. The theme's `MuiPaper` has `p:2` which is `8px` by default._
+    *   **Update for AppCard**: The `AppCard` component itself has `p: 2.5`. This directly uses the theme's spacing unit. If `theme.spacing` is `4` (as it is), then `p:2.5` means `2.5 * 4px = 10px`. This should be noted as a specific padding for AppCards. General MUI components will use `theme.spacing(X)`.
+
+## 4. Border Radius
+
+*   **Global Border Radius (`shape.borderRadius`):** `10px`.
+*   This is applied to components like `Paper` (used by `AppCard`), `Button`, `TextField` (inputs), etc., through theme overrides.
+
+## 5. Shadows
+
+Subtle shadows are used to create depth and hierarchy, defined in `theme.shadows`.
+
+*   **`shadows[0]`:** `none`
+*   **`shadows[1]` (Default for `AppCard`, `AppBar`):** `'0px 1px 3px 0px rgba(0,0,0,0.07), 0px 1px 2px 0px rgba(0,0,0,0.03)'`
+*   **`shadows[2]`:** `'0px 2px 5px 0px rgba(0,0,0,0.07), 0px 1px 4px 0px rgba(0,0,0,0.04)'`
+*   **`shadows[3]` (Used for `DashboardCard` hover):** `'0px 4px 8px 0px rgba(0,0,0,0.07), 0px 2px 6px 0px rgba(0,0,0,0.05)'` (Example, actual value from theme array)
+*   Higher elevation shadows are available in the `theme.shadows` array for elements needing more prominence.
+
+## 6. Atomicity & Reusability
+
+*   The frontend follows an atomic design structure (`atoms`, `molecules`, `organisms`, `templates`, `pages`).
+*   **Atoms:** Basic building blocks (e.g., `AppCard`, `PrimaryButton`, `TextInput`). These should encapsulate base MUI components with any project-specific styling variations.
+*   **Molecules:** Groups of atoms forming simple components (e.g., `SearchBar`, `DropdownMenu`).
+*   **Organisms:** More complex UI components composed of molecules and/or atoms.
+*   Strive to use and extend these reusable components rather than applying one-off styles. Modifications to the look and feel should primarily happen in `theme.js` or within these atomic components.
+
+This document should be updated as the design system evolves.
