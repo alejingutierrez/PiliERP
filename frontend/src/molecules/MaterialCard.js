@@ -1,42 +1,37 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import '@material/web/labs/card/elevated-card.js';
-import '@material/web/button/filled-button.js';
+import { MWCElevatedCard } from '../mwc_wrappers/MWCElevatedCard'; // Adjusted import path
+import { MWCFilledButton } from '../mwc_wrappers/MWCFilledButton';   // Adjusted import path
 
-const MaterialCard = ({ title, content, actionText, onActionClick }) => {
-  const cardRef = useRef(null);
-  const buttonRef = useRef(null);
+// Note: The direct MWC imports like '@material/web/labs/card/elevated-card.js'
+// are no longer needed here as they are handled by the wrapper components.
 
-  useEffect(() => {
-    const buttonElement = buttonRef.current;
-    if (buttonElement && onActionClick) {
-      buttonElement.addEventListener('click', onActionClick);
-      return () => {
-        buttonElement.removeEventListener('click', onActionClick);
-      };
-    }
-  }, [onActionClick]);
+const MaterialCard = ({ title, content, actionText, onActionClick, children }) => {
+  // Removed useRef and useEffect for manual event listeners.
+  // Event handling is now done via props on the wrapped components.
 
   return (
-    <md-elevated-card ref={cardRef}>
-      <div style={{ padding: '16px' }}>
-        <h3>{title}</h3>
-        <p>{content}</p>
+    <MWCElevatedCard>
+      <div style={{ padding: '16px' }}> {/* Existing padding, can be reviewed later if MWC card has built-in padding options */}
+        {title && <h3>{title}</h3>}
+        {content && <p>{content}</p>}
+        {children} {/* Allow children to be passed through */}
         {actionText && onActionClick && (
-          <div style={{ marginTop: '16px', textAlign: 'right' }}>
-            <md-filled-button ref={buttonRef}>
+          <div style={{ marginTop: '16px', textAlign: 'right' }}> {/* Existing layout styling */}
+            <MWCFilledButton onClick={onActionClick}>
               {actionText}
-            </md-filled-button>
+            </MWCFilledButton>
           </div>
         )}
       </div>
-    </md-elevated-card>
+    </MWCElevatedCard>
   );
 };
 
 MaterialCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+  title: PropTypes.string, // No longer required, can be optional
+  content: PropTypes.string, // No longer required, can be optional
+  children: PropTypes.node, // Added to allow more flexible content
   actionText: PropTypes.string,
   onActionClick: PropTypes.func,
 };

@@ -1,37 +1,41 @@
-import React, { useRef, useEffect } from 'react';
-import '@material/web/button/filled-button.js'; // Importa el componente web directamente
+import React from 'react';
+import PropTypes from 'prop-types';
+import { MWCFilledButton } from '../mwc_wrappers/MWCFilledButton';
 
-const PrimaryButton = ({ children, sx = {}, ...props }) => {
-  const buttonRef = useRef(null);
-
-  useEffect(() => {
-    const buttonElement = buttonRef.current;
-    if (buttonElement) {
-      // Aplica estilos y otras propiedades al componente web
-      Object.entries(props).forEach(([key, value]) => {
-        if (key !== 'children' && key !== 'sx') {
-          buttonElement.setAttribute(key, value);
-        }
-      });
-
-      // Aplica los estilos de 'sx' directamente al elemento DOM
-      const style = {
-        fontWeight: '600',
-        textTransform: 'none',
-        borderRadius: '10px',
-        ...sx,
-      };
-      Object.entries(style).forEach(([key, value]) => {
-        buttonElement.style[key] = value;
-      });
-    }
-  }, [props, sx]);
-
+/**
+ * PrimaryButton is a wrapper around the MWCFilledButton component.
+ * It's intended for primary actions.
+ */
+const PrimaryButton = ({ children, onClick, disabled = false, type = 'button', ...props }) => {
   return (
-    <md-filled-button ref={buttonRef}>
+    <MWCFilledButton
+      onClick={onClick}
+      disabled={disabled}
+      type={type} // Allow passing button type e.g. "submit"
+      {...props} // Spread any other props like 'aria-label', custom styles if necessary (though theme should handle most)
+    >
       {children}
-    </md-filled-button>
+    </MWCFilledButton>
   );
+};
+
+PrimaryButton.propTypes = {
+  /**
+   * The content of the button.
+   */
+  children: PropTypes.node.isRequired,
+  /**
+   * Function to call when the button is clicked.
+   */
+  onClick: PropTypes.func,
+  /**
+   * If true, the button will be disabled.
+   */
+  disabled: PropTypes.bool,
+  /**
+   * The type of the button (e.g., "button", "submit", "reset").
+   */
+  type: PropTypes.string,
 };
 
 export default PrimaryButton;
