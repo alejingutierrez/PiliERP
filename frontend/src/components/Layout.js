@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Drawer, Toolbar, Typography, List, ListItem, ListItemIcon, ListItemText, Box, CssBaseline, ListItemButton } from '@mui/material';
+import { AppBar, Drawer, Toolbar, Typography, List, ListItem, ListItemIcon, ListItemText, Box, ListItemButton } from '@mui/material'; // CssBaseline removed as it's in App.js
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
@@ -10,10 +10,18 @@ const drawerWidth = 240;
 const Layout = ({ children }) => {
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      {/* CssBaseline is now in App.js, applied globally */}
+      <AppBar 
+        position="fixed" 
+        sx={{ 
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          backgroundColor: 'primary.main', // Explicitly set, or rely on theme
+          elevation: 4, // Added elevation
+        }}
+        elevation={4} // Ensure elevation is applied
+      >
         <Toolbar>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" sx={{ color: 'primary.contrastText' }}> {/* Ensuring contrast text */}
             ERP Dashboard
           </Typography>
         </Toolbar>
@@ -28,34 +36,35 @@ const Layout = ({ children }) => {
           '& .MuiDrawer-paper': {
             width: drawerWidth,
             boxSizing: 'border-box',
+            backgroundColor: 'background.paper', // Drawer background
           },
         }}
       >
         <Toolbar /> {/* Necessary for content to be below app bar */}
         <Box sx={{ overflow: 'auto' }}>
           <List>
-            <ListItem disablePadding component={Link} to="/tiendas">
-              <ListItemButton>
-                <ListItemIcon>
+            <ListItem disablePadding component={Link} to="/tiendas" sx={{ textDecoration: 'none', color: 'inherit' }}>
+              <ListItemButton sx={{ '&:hover': { backgroundColor: 'action.hover' } }}>
+                <ListItemIcon sx={{ color: 'text.secondary' }}>
                   <StorefrontIcon />
                 </ListItemIcon>
-                <ListItemText primary="Tiendas" />
+                <ListItemText primary="Tiendas" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding component={Link} to="/usuarios">
-              <ListItemButton>
-                <ListItemIcon>
+            <ListItem disablePadding component={Link} to="/usuarios" sx={{ textDecoration: 'none', color: 'inherit' }}>
+              <ListItemButton sx={{ '&:hover': { backgroundColor: 'action.hover' } }}>
+                <ListItemIcon sx={{ color: 'text.secondary' }}>
                   <PeopleIcon />
                 </ListItemIcon>
-                <ListItemText primary="Usuarios" />
+                <ListItemText primary="Usuarios" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding component={Link} to="/clientes">
-              <ListItemButton>
-                <ListItemIcon>
+            <ListItem disablePadding component={Link} to="/clientes" sx={{ textDecoration: 'none', color: 'inherit' }}>
+              <ListItemButton sx={{ '&:hover': { backgroundColor: 'action.hover' } }}>
+                <ListItemIcon sx={{ color: 'text.secondary' }}>
                   <PersonIcon />
                 </ListItemIcon>
-                <ListItemText primary="Clientes" />
+                <ListItemText primary="Clientes" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
             </ListItem>
           </List>
@@ -63,7 +72,13 @@ const Layout = ({ children }) => {
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3, marginLeft: `${drawerWidth}px` }}
+        sx={{ 
+          flexGrow: 1, 
+          bgcolor: 'background.default', // Ensure this uses theme
+          p: 3, // Uses theme.spacing(3) by default
+          marginLeft: `${drawerWidth}px`,
+          animation: 'fadeIn 0.5s ease-in-out' // Added fade-in animation
+        }}
       >
         <Toolbar /> {/* Necessary for content to be below app bar */}
         {children}
