@@ -8,8 +8,8 @@ const HeaderSearchBar = ({ placeholder = 'Buscar', ...props }) => (
     sx={{
       display: 'flex',
       alignItems: 'center',
-      width: { xs: '100%', sm: 480 },
-      height: 32,
+      width: { xs: '100%', sm: 372 },
+      height: 36,
       px: 1,
       borderRadius: 8,
       backgroundColor: '#FFFFFF',

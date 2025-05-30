@@ -1,65 +1,51 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  spacing: 4,
   palette: {
     primary: {
       main: '#008060',
+      contrastText: '#FFFFFF',
     },
     secondary: {
       main: '#2C6ECB',
     },
+    success: {
+      main: '#36A269',
+    },
+    warning: {
+      main: '#EEC200',
+    },
+    error: {
+      main: '#D82C0D',
+    },
     background: {
       default: '#F6F6F7',
       paper: '#FFFFFF',
-      header: '#1C1C1C',
+      header: '#111213',
       sidebar: '#FFFFFF',
     },
     text: {
       primary: '#202223',
-      secondary: '#4C4D4F',
-      disabled: '#8C8D8F',
-      placeholder: '#6D7175',
+      secondary: '#6D7175',
+      disabled: '#B4B7BA',
+      placeholder: '#979797',
+    },
+    action: {
+      hover: '#006D57',
     },
     divider: '#E0E0E0',
   },
   typography: {
-    fontFamily: 'Inter, system-ui, sans-serif',
+    fontFamily: 'Inter, "Helvetica Neue", Arial, sans-serif',
     fontSize: 14,
     h1: {
       fontWeight: 600,
-      fontSize: '1.75rem',
-      lineHeight: 1.4,
-      letterSpacing: '-0.2px',
+      fontSize: '1.25rem',
     },
     h2: {
       fontWeight: 600,
-      fontSize: '1.5rem',
-      lineHeight: 1.4,
-      letterSpacing: '-0.2px',
-    },
-    h3: {
-      fontWeight: 600,
-      fontSize: '1.25rem',
-      lineHeight: 1.4,
-      letterSpacing: '-0.2px',
-    },
-    h4: {
-      fontWeight: 600,
-      fontSize: '1.125rem',
-      lineHeight: 1.4,
-      letterSpacing: '-0.2px',
-    },
-    h5: {
-      fontWeight: 600,
       fontSize: '1rem',
-      lineHeight: 1.4,
-      letterSpacing: '-0.2px',
-    },
-    h6: {
-      fontWeight: 600,
-      fontSize: '0.875rem',
-      lineHeight: 1.4,
-      letterSpacing: '-0.2px',
     },
     subtitle1: {
       fontSize: '1rem',
@@ -67,20 +53,18 @@ const theme = createTheme({
     },
     subtitle2: {
       fontSize: '0.875rem',
-      fontWeight: 500,
+      fontWeight: 600,
     },
     body1: {
-      fontSize: '1rem',
+      fontSize: '0.875rem',
+      fontWeight: 400,
     },
     body2: {
       fontSize: '0.875rem',
     },
-    caption: {
-      fontSize: '0.75rem',
-    },
   },
   shape: {
-    borderRadius: 4,
+    borderRadius: 6,
   },
   transitions: {
     easing: {
@@ -94,27 +78,28 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          borderRadius: 4,
+          borderRadius: 6,
           textTransform: 'none',
           boxShadow: 'none',
           fontWeight: 600,
-          height: 28,
-          padding: '0 12px',
-          transition: 'background-color 150ms cubic-bezier(0.25,0.8,0.4,1)',
+          height: 36,
+          padding: '0 16px',
+          transition: 'background-color 150ms ease-out',
           '&:hover': {
-            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+            boxShadow: '0 1px 0 rgba(0,0,0,0.05)',
+            backgroundColor: '#006D57',
           },
         },
         outlined: {
-          borderColor: '#8C9196',
+          borderColor: '#E0E0E0',
           color: '#202223',
           '&:hover': {
-            backgroundColor: '#F1F2F3',
+            backgroundColor: '#F6F6F7',
           },
         },
         contained: {
           '&:disabled': {
-            backgroundColor: '#C4C4C4',
+            backgroundColor: '#B4B7BA',
             color: '#FFFFFF',
           },
         },
@@ -138,11 +123,11 @@ const theme = createTheme({
           paddingLeft: 2,
           paddingRight: 2,
           '&.Mui-selected': {
-            backgroundColor: '#F1F2F3',
-            borderLeft: '2px solid #2C6ECB',
+            backgroundColor: '#F6F6F7',
+            borderLeft: '2px solid #008060',
           },
           '&:hover': {
-            backgroundColor: '#F1F2F3',
+            backgroundColor: '#F6F6F7',
           },
         },
       },
@@ -155,11 +140,19 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-root': {
-            borderRadius: 4,
+            height: 36,
+            borderRadius: 6,
             backgroundColor: '#FFFFFF',
+            '& fieldset': {
+              borderColor: '#C4C4C4',
+            },
+            '&.Mui-focused fieldset': {
+              borderColor: '#5C6AC4',
+              borderWidth: 2,
+            },
           },
           '& input::placeholder': {
-            color: '#6D7175',
+            color: '#979797',
             opacity: 1,
           },
         },
@@ -193,7 +186,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&.Mui-focusVisible': {
-            outline: '2px solid #005F4B',
+            outline: '2px solid #5C6AC4',
             outlineOffset: 0,
           },
         },
