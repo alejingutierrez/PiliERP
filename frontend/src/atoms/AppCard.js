@@ -6,7 +6,7 @@ const AppCard = ({ children, sx = {}, ...props }) => (
     elevation={0}
     {...props}
     sx={{
-      p: 3,
+      p: 2.5,
       borderRadius: 8,
       backgroundColor: 'background.paper',
       border: '1px solid #E0E0E0',

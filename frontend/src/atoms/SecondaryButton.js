@@ -7,11 +7,11 @@ const SecondaryButton = ({ children, ...props }) => (
     color="primary"
     {...props}
     sx={{
-      borderRadius: 4,
+      borderRadius: 6,
       textTransform: 'none',
       fontWeight: 600,
-      height: 28,
-      px: '12px',
+      height: 36,
+      px: '16px',
       ...props.sx,
     }}
   >

@@ -48,11 +48,11 @@ const Layout = ({ children }) => {
           backgroundColor: theme.palette.background.header,
           color: '#FFFFFF',
           borderBottom: `1px solid ${theme.palette.divider}`,
-          minHeight: 56,
+          minHeight: 44,
         })}
         elevation={0}
       >
-        <Toolbar sx={{ minHeight: 56, px: 2 }}>
+        <Toolbar sx={{ minHeight: 44, px: 2 }}>
           {isOverlay && (
             <IconButton
               color="inherit"
@@ -81,7 +81,7 @@ const Layout = ({ children }) => {
             <IconButton color="inherit" sx={{ ml: 1 }}>
               <NotificationsNoneIcon sx={{ fontSize: 20 }} />
             </IconButton>
-            <Avatar sx={{ ml: 1, width: 32, height: 32 }}>A</Avatar>
+            <Avatar sx={{ ml: 1, width: 28, height: 28 }}>A</Avatar>
           </Box>
         </Toolbar>
       </AppBar>
@@ -110,7 +110,7 @@ const Layout = ({ children }) => {
                 onClick={isOverlay ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/tiendas'}
               >
-              <ListItemIcon sx={{ color: location.pathname === '/tiendas' ? 'secondary.main' : 'text.secondary' }}>
+              <ListItemIcon sx={{ color: location.pathname === '/tiendas' ? 'primary.main' : 'text.secondary' }}>
                   <StorefrontOutlinedIcon />
               </ListItemIcon>
                 <ListItemText primary="Tiendas" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
@@ -123,7 +123,7 @@ const Layout = ({ children }) => {
                 onClick={isOverlay ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/usuarios'}
               >
-                <ListItemIcon sx={{ color: location.pathname === '/usuarios' ? 'secondary.main' : 'text.secondary' }}>
+                <ListItemIcon sx={{ color: location.pathname === '/usuarios' ? 'primary.main' : 'text.secondary' }}>
                   <PeopleOutlineIcon />
                 </ListItemIcon>
                 <ListItemText primary="Usuarios" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
@@ -136,7 +136,7 @@ const Layout = ({ children }) => {
                 onClick={isOverlay ? handleDrawerToggle : undefined}
                 selected={location.pathname === '/clientes'}
               >
-                <ListItemIcon sx={{ color: location.pathname === '/clientes' ? 'secondary.main' : 'text.secondary' }}>
+                <ListItemIcon sx={{ color: location.pathname === '/clientes' ? 'primary.main' : 'text.secondary' }}>
                   <PersonOutlineIcon />
                 </ListItemIcon>
                 <ListItemText primary="Clientes" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
