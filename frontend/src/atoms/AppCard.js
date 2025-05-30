@@ -10,7 +10,6 @@ const AppCard = ({ children, sx = {}, ...props }) => (
       borderRadius: 8,
       backgroundColor: 'background.paper',
       border: '1px solid #E0E0E0',
-      boxShadow: '0 0 0 1px rgba(0,0,0,0.05)',
       ...sx,
     }}
   >
