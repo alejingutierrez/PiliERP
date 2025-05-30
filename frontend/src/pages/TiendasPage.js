@@ -1,7 +1,9 @@
 import React from 'react';
-import { Typography, Button, Box, TextField, Link } from '@mui/material';
+import { Typography, Box, Link } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
-import SearchIcon from '@mui/icons-material/Search';
+import PrimaryButton from '../atoms/PrimaryButton';
+import SearchBar from '../molecules/SearchBar';
+import Carousel from '../molecules/Carousel';
 
 const TiendasPage = () => {
   return (
@@ -10,26 +12,12 @@ const TiendasPage = () => {
         <Typography variant="h4" component="h1">
           Tiendas
         </Typography>
-        <Button variant="contained" color="secondary" sx={{ height: 32 }}>
+        <PrimaryButton sx={{ height: 32 }}>
           Agregar tienda
-        </Button>
+        </PrimaryButton>
       </Box>
 
-      <TextField
-        variant="outlined"
-        placeholder="Buscar tiendas"
-        sx={(theme) => ({
-          mb: 3,
-          width: 320,
-          '& .MuiOutlinedInput-root': {
-            borderRadius: theme.shape.borderRadius,
-            height: 32,
-            px: 1,
-          },
-          '& fieldset': { borderColor: theme.palette.divider },
-        })}
-        InputProps={{ startAdornment: <SearchIcon sx={{ mr: 1 }} /> }}
-      />
+      <SearchBar placeholder="Buscar tiendas" sx={{ mb: 3, width: 320 }} />
 
       <Box sx={{ textAlign: 'center', py: 6 }}>
         <InboxIcon sx={{ fontSize: 40, color: 'text.disabled', mb: 1 }} />
@@ -40,6 +28,14 @@ const TiendasPage = () => {
           Importar tiendas
         </Link>
       </Box>
+
+      <Carousel
+        items={[
+          <Box sx={{ p: 2, textAlign: 'center' }}>Bienvenido al ERP</Box>,
+          <Box sx={{ p: 2, textAlign: 'center' }}>Gestione sus tiendas</Box>,
+          <Box sx={{ p: 2, textAlign: 'center' }}>Administre clientes y usuarios</Box>,
+        ]}
+      />
     </Box>
   );
 };
