@@ -116,8 +116,9 @@ const Layout = ({ children }) => {
         sx={(theme) => ({
           flexGrow: 1,
           bgcolor: theme.palette.background.default,
-          p: 3,
-          marginLeft: `${drawerWidth}px`,
+          pt: 3,
+          pb: 3,
+          px: '10%',
           animation: 'fadeIn 0.5s ease-in-out',
         })}
       >
