@@ -46,11 +46,11 @@ const Layout = ({ children }) => {
         sx={(theme) => ({
           zIndex: theme.zIndex.drawer + 1,
           backgroundColor: theme.palette.background.header,
-          color: '#FFFFFF',
+          color: theme.palette.text.primary,
           borderBottom: `1px solid ${theme.palette.divider}`,
           minHeight: 44,
         })}
-        elevation={0}
+        elevation={1}
       >
         <Toolbar sx={{ minHeight: 44, px: 2 }}>
           {isOverlay && (

@@ -8,7 +8,7 @@ const PrimaryButton = ({ children, ...props }) => (
     disableElevation
     {...props}
     sx={{
-      borderRadius: 6,
+      // borderRadius removed to inherit from MuiButton styleOverrides in theme
       textTransform: 'none',
       fontWeight: 600,
       height: 36,

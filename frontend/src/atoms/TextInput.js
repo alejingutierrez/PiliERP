@@ -9,7 +9,7 @@ const TextInput = ({ ...props }) => (
     sx={{
       '& .MuiOutlinedInput-root': {
         height: 36,
-        borderRadius: 6,
+        // borderRadius removed to inherit from MuiTextField styleOverrides in theme
         backgroundColor: 'background.paper',
         '& fieldset': {
           borderColor: '#C4C4C4',

@@ -3,14 +3,12 @@ import Paper from '@mui/material/Paper';
 
 const AppCard = ({ children, sx = {}, ...props }) => (
   <Paper
-    elevation={0}
+    elevation={1}
     {...props}
     sx={{
       p: 2.5,
-      borderRadius: 8,
       backgroundColor: 'background.paper',
-      border: '1px solid #E0E0E0',
-      boxShadow: '0 0 0 1px rgba(0,0,0,0.05)',
+      // borderRadius, border, and boxShadow removed to inherit from theme
       ...sx,
     }}
   >
