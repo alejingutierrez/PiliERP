@@ -1,5 +1,7 @@
 import React from 'react';
-import { Typography, Paper, Button, Box, TextField } from '@mui/material';
+import { Typography, Paper, Box } from '@mui/material';
+import PrimaryButton from '../atoms/PrimaryButton';
+import SearchBar from '../molecules/SearchBar';
 
 const ClientesPage = () => {
   return (
@@ -17,18 +19,12 @@ const ClientesPage = () => {
         })}
       >
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
-          <Button variant="contained" color="secondary">
+          <PrimaryButton>
             Agregar Nuevo Cliente
-          </Button>
+          </PrimaryButton>
         </Box>
-        
-        <TextField 
-          variant="outlined" 
-          margin="normal" 
-          label="Buscar Clientes" 
-          fullWidth 
-          sx={{ mb: 3 }} 
-        />
+
+        <SearchBar placeholder="Buscar Clientes" fullWidth sx={{ mb: 3 }} />
         
         <Typography variant="body1">
           Aquí se mostrará la lista de clientes o el contenido principal de esta sección.

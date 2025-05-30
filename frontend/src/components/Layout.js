@@ -1,5 +1,6 @@
 import React from 'react';
 import { AppBar, Drawer, Toolbar, Typography, List, ListItem, ListItemIcon, ListItemText, Box, ListItemButton } from '@mui/material';
+import AppTooltip from '../atoms/AppTooltip';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
@@ -51,6 +52,7 @@ const Layout = ({ children }) => {
         <Box sx={{ overflow: 'auto' }}>
           <List>
             <ListItem disablePadding component={Link} to="/tiendas" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
+              <AppTooltip title="Tiendas" placement="right">
               <ListItemButton
                 selected={location.pathname === '/tiendas'}
                 sx={(theme) => ({
@@ -66,8 +68,10 @@ const Layout = ({ children }) => {
                 </ListItemIcon>
                 <ListItemText primary="Tiendas" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
+              </AppTooltip>
             </ListItem>
             <ListItem disablePadding component={Link} to="/usuarios" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
+              <AppTooltip title="Usuarios" placement="right">
               <ListItemButton
                 selected={location.pathname === '/usuarios'}
                 sx={(theme) => ({
@@ -83,8 +87,10 @@ const Layout = ({ children }) => {
                 </ListItemIcon>
                 <ListItemText primary="Usuarios" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
+              </AppTooltip>
             </ListItem>
             <ListItem disablePadding component={Link} to="/clientes" sx={{ textDecoration: 'none', color: 'inherit', mb: 1 }}>
+              <AppTooltip title="Clientes" placement="right">
               <ListItemButton
                 selected={location.pathname === '/clientes'}
                 sx={(theme) => ({
@@ -100,6 +106,7 @@ const Layout = ({ children }) => {
                 </ListItemIcon>
                 <ListItemText primary="Clientes" primaryTypographyProps={{ variant: 'body1', color: 'text.primary' }} />
               </ListItemButton>
+              </AppTooltip>
             </ListItem>
           </List>
         </Box>
