@@ -3,8 +3,8 @@ import { Box, Typography } from '@mui/material';
 import AppCard from '../atoms/AppCard';
 
 const Page = ({ title, actions, children }) => (
-  <Box>
-    <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 3 }}>
+  <Box sx={{ '& > *:not(:last-child)': { mb: 6 } }}>
+    <Typography variant="h4" component="h1" gutterBottom sx={{ mb: 8 }}>
       {title}
     </Typography>
     <AppCard>

@@ -153,9 +153,13 @@ const Layout = ({ children }) => {
           bgcolor: theme.palette.background.default,
           pt: 3,
           pb: 8,
-          px: 4,
-          maxWidth: 1440,
+          width: '100%',
+          maxWidth: 1180,
           mx: 'auto',
+          px: { xs: 4, sm: 6 },
+          '@media (min-width:1440px)': {
+            px: 8,
+          },
           animation: 'fadeIn 0.5s ease-in-out',
         })}
       >
