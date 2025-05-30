@@ -3,11 +3,17 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import MaterialCard from './MaterialCard';
 
-// Mock the custom elements for testing purposes as they might not be fully defined in a Jest/JSDOM environment
-// or might rely on browser APIs not present.
-// We are testing the React component's logic, not the custom elements themselves here.
-// jest.mock('@material/web/elevated-card.js', () => {}); // Using __mocks__ directory instead
-// jest.mock('@material/web/button/filled-button.js', () => {}); // Using __mocks__ directory instead
+// Define Material Web Components as custom elements for the test environment
+// These imports should point to the actual component definitions
+import { MdElevatedCard } from '@material/web/card/md-elevated-card.js'; // Adjusted path
+import { MdFilledButton } from '@material/web/button/md-filled-button.js'; // Adjusted path
+
+if (!customElements.get('md-elevated-card')) {
+  customElements.define('md-elevated-card', MdElevatedCard);
+}
+if (!customElements.get('md-filled-button')) {
+  customElements.define('md-filled-button', MdFilledButton);
+}
 
 describe('MaterialCard', () => {
   const defaultProps = {
@@ -34,16 +40,11 @@ describe('MaterialCard', () => {
 
     const actionButton = screen.getByText(actionText);
     expect(actionButton).toBeInTheDocument();
-    // Note: Since we're not deeply rendering the custom element's own button structure,
-    // we'll assume the <md-filled-button> itself is clickable if present.
-    // For a more robust test of the custom element interaction, a browser environment (e.g. Playwright) would be needed.
-    // Here we check if the button text is present and the click handler is attached to the md-filled-button.
+    // Ensure the component is treated as a button by testing library, or use its text.
+    // The text itself is inside the <md-filled-button>
+    expect(actionButton.closest('md-filled-button')).toBeInTheDocument();
 
-    // Simulate click on the md-filled-button custom element
-    // We need to ensure the click handler is passed down.
-    // In a real custom element, the click might be on an inner button.
-    // For this test, we assume the onClick prop on <md-filled-button> works.
-    fireEvent.click(actionButton); // Or screen.getByRole('button', { name: actionText }) if role is set by md-filled-button
+    fireEvent.click(actionButton);
     expect(mockOnActionClick).toHaveBeenCalledTimes(1);
   });
 
