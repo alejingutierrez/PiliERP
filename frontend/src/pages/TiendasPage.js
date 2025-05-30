@@ -18,7 +18,16 @@ const TiendasPage = () => {
       <TextField
         variant="outlined"
         placeholder="Buscar tiendas"
-        sx={{ mb: 3, width: 320, '& .MuiOutlinedInput-root': { borderRadius: 1, height: 32, px: 1 }, '& fieldset': { borderColor: '#AEB4B9' } }}
+        sx={(theme) => ({
+          mb: 3,
+          width: 320,
+          '& .MuiOutlinedInput-root': {
+            borderRadius: theme.shape.borderRadius,
+            height: 32,
+            px: 1,
+          },
+          '& fieldset': { borderColor: theme.palette.divider },
+        })}
         InputProps={{ startAdornment: <SearchIcon sx={{ mr: 1 }} /> }}
       />
 

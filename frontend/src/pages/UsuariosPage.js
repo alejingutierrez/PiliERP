@@ -8,14 +8,13 @@ const UsuariosPage = () => {
         Usuarios
       </Typography>
       
-      <Paper 
-        sx={{ 
-          p: 3, // theme.spacing(3)
-          borderRadius: (theme) => theme.shape.borderRadius, // theme.shape.borderRadius
-          boxShadow: (theme) => theme.shadows[1], // theme.shadows[1]
-          // Alternatively, for a border:
-          // border: (theme) => `1px solid ${theme.palette.divider}`,
-        }}
+      <Paper
+        sx={(theme) => ({
+          p: 3,
+          borderRadius: theme.shape.borderRadius,
+          boxShadow: theme.shadows[1],
+          border: `1px solid ${theme.palette.divider}`,
+        })}
       >
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
           <Button variant="contained" color="secondary">
