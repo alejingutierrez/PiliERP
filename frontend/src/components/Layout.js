@@ -119,6 +119,9 @@ const Layout = ({ children }) => {
           p: 3,
           marginLeft: `${drawerWidth}px`,
           animation: 'fadeIn 0.5s ease-in-out',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         })}
       >
         <Toolbar /> {/* Necessary for content to be below app bar */}
