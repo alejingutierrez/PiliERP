@@ -1,7 +1,8 @@
 import React, { useRef, useEffect } from 'react';
-import '@material/web/tooltip/tooltip.js';
+import '@material/web/tooltip/tooltip';
 
 const AppTooltip = ({ children, title, placement = 'bottom', ...props }) => {
+  const internalUniqueId = React.useId(); // Moved to the top
   const childRef = useRef(null);
   const tooltipRef = useRef(null);
 
@@ -55,7 +56,7 @@ const AppTooltip = ({ children, title, placement = 'bottom', ...props }) => {
   }
 
   // The id for associating tooltip with anchor
-  const anchorId = `tooltip-anchor-${React.useId()}`;
+  const anchorId = `tooltip-anchor-${internalUniqueId}`;
 
   return (
     <>
