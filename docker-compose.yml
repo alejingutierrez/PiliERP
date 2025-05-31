@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80" # Map host port 80 to container port 80 (Nginx default)
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile # This Dockerfile will be created in the next step
+    ports:
+      - "3001:3001" # Map host port 3001 to container port 3001
+    environment:
+      # Add any necessary environment variables for the backend
+      # For example, if the frontend needs to know the backend URL:
+      # REACT_APP_BACKEND_URL: http://backend:3001
+      # (This would require frontend code to use this variable)
+      # For now, we'll assume direct communication via service name 'backend'
+      # from within the frontend if it were making direct API calls from server-side Node.
+      # However, the proxy in package.json suggests client-side calls.
+      PORT: 3001
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
