@@ -13,8 +13,7 @@ import '@material/web/all.js';
 
 // Custom components (ensure they don't rely on MUI)
 import HeaderSearchBar from '../molecules/HeaderSearchBar';
-// AppTooltip might need replacement or removal if MUI-dependent
-// import AppTooltip from '../atoms/AppTooltip';
+// AppTooltip has been removed.
 
 const drawerWidth = 240;
 const collapsedDrawerWidth = 72;
@@ -133,6 +132,7 @@ const Layout = ({ children }) => {
       >
         <div style={{height: '56px'}}></div> {/* Spacer for top-app-bar */}
         <md-list>
+          {/* TODO: Consider adding MWC tooltips for navigation items if needed. */}
           {navItems.map((item) => (
             // AppTooltip removed for now. MWC tooltips can be added later if needed.
             // e.g. <md-list-item title={item.text}>
