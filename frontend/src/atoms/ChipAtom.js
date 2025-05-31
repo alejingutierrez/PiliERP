@@ -6,21 +6,20 @@ const ChipAtom = ({
   label,
   variant = 'filled', // 'filled', 'outlined'. MWC MdFilterChip is 'filled' by default. 'elevated' is another option.
   color = 'default',  // MUI color prop. MWC uses theming. Selected state is usually primary.
-  size = 'medium',    // MUI size. MWC uses density/typography. Not directly mapped.
   icon,               // MUI icon (ReactNode)
   avatar,             // MUI avatar (ReactNode) - treat similar to icon for simplicity
   onDelete,
   onClick,
   selected,           // Explicit selected state for MdFilterChip
   disabled,
-  sx = {},
+  customStyles = {},
   ...props // Other props like 'elevated' for MdFilterChip can be passed via props.
 }) => {
   const chipStyles = {
     // Global border radius from guidelines
-    '--md-filter-chip-container-shape': '10px',
+    '--md-filter-chip-container-shape': 'var(--md-sys-shape-corner-small)',
     // Customizations based on MUI props
-    ...sx, // Spread sx from props first
+    ...customStyles, // Spread customStyles from props first
   };
 
   if (variant === 'outlined') {
@@ -48,17 +47,17 @@ const ChipAtom = ({
     // MWC selected state handles this for 'primary' or 'secondary' if themed.
     // If a non-selected chip needs specific background color:
     if (!selected && color !== 'default') {
-        let targetColor = '';
-        if (color === 'primary') targetColor = 'var(--md-sys-color-primary-container, #E8DEF8)';
-        else if (color === 'secondary') targetColor = 'var(--md-sys-color-secondary-container, #E8DEF8)';
+        if (color === 'primary') {
+          chipStyles['--md-filter-chip-container-color'] = 'var(--md-sys-color-primary-container, #E8DEF8)';
+          chipStyles['--md-filter-chip-label-text-color'] = 'var(--md-sys-color-on-primary-container)';
+          chipStyles['--md-filter-chip-icon-color'] = 'var(--md-sys-color-on-primary-container)';
+        } else if (color === 'secondary') {
+          chipStyles['--md-filter-chip-container-color'] = 'var(--md-sys-color-secondary-container, #E8DEF8)';
+          chipStyles['--md-filter-chip-label-text-color'] = 'var(--md-sys-color-on-secondary-container)';
+          chipStyles['--md-filter-chip-icon-color'] = 'var(--md-sys-color-on-secondary-container)';
+        }
         // Add more semantic color mappings if needed (error, success etc.)
         // else if (color === 'error') targetColor = 'var(--md-sys-color-error-container, #F8F0F0)';
-
-        if (targetColor) {
-            chipStyles['--md-filter-chip-container-color'] = targetColor;
-            // Potentially adjust label/icon colors too if not handled by MWC defaults for containers
-            // chipStyles['--md-filter-chip-label-text-color'] = 'var(--md-sys-color-on-primary-container)';
-        }
     }
   }
 

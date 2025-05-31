@@ -15,7 +15,7 @@ const AvatarAtom = ({
   imgProps,
   variant = 'circular', // 'circular', 'rounded', 'square'
   size = 'medium', // 'small', 'medium', 'large', or number (pixels)
-  sx = {},
+  customStyles = {},
   ...props
 }) => {
   let displaySize = '40px';
@@ -49,21 +49,21 @@ const AvatarAtom = ({
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden', // Ensure content like images respect border radius
-    ...sx, // sx should be applied first to be overridable by specific logic below
+    ...customStyles, // customStyles should be applied first to be overridable by specific logic below
   };
 
   if (variant === 'circular') {
     baseStyle.borderRadius = '50%';
   } else if (variant === 'rounded') {
-    baseStyle.borderRadius = sx.borderRadius || '10px'; // Guideline or sx override
+    baseStyle.borderRadius = customStyles.borderRadius || 'var(--md-sys-shape-corner-medium)'; // Guideline or customStyles override
   } else { // square
-    baseStyle.borderRadius = sx.borderRadius || '0px';
+    baseStyle.borderRadius = customStyles.borderRadius || '0px';
   }
 
   // Default background and text colors for letter/icon avatars
-  // These can be overridden by sx if sx includes backgroundColor or color
-  const defaultBgColor = sx.backgroundColor || '#6D7175'; // text.secondary from guidelines
-  const defaultTextColor = sx.color || '#FFFFFF'; // primary.contrastText from guidelines
+  // These can be overridden by customStyles if customStyles includes backgroundColor or color
+  const defaultBgColor = customStyles.backgroundColor || 'var(--md-sys-color-surface-container-highest)'; // text.secondary from guidelines
+  const defaultTextColor = customStyles.color || 'var(--md-sys-color-primary)'; // primary.contrastText from guidelines
 
 
   if (src) {
@@ -81,8 +81,8 @@ const AvatarAtom = ({
     const iconStyle = {
       fontSize: letterIconFontSize, // For Material Symbols font icons
       '--md-icon-size': letterIconFontSize, // For MdIcon component size
-      color: defaultTextColor, // Default icon color, sx can override
-      ...sx.iconStyles, // Allow passing styles directly to icon via sx
+      color: defaultTextColor, // Default icon color, customStyles can override
+      ...customStyles.iconStyles, // Allow passing styles directly to icon via customStyles
     };
     return (
       <div style={{ ...baseStyle, backgroundColor: defaultBgColor, color: defaultTextColor }} {...props}>
