@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import React, { useState, useId } from 'react';
+import '@material/web/menu/menu.js';
+import '@material/web/menu/menu-item.js';
+// IconAtom will import @material/web/icon/icon.js
 import AvatarAtom from '../atoms/AvatarAtom';
 import IconAtom from '../atoms/IconAtom';
 
@@ -11,66 +9,59 @@ const UserMenu = ({
   avatarSrc,
   avatarChildren,
   avatarAlt = "User Menu",
-  options = [], // Array of { label: string, onClick: function, icon?: string }
+  options = [], // Array of { label: string, onClick: function, icon?: string, disabled?: boolean }
   avatarSize = 'medium',
 }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const avatarId = useId();
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleMenuItemClick = (onClickCallback) => {
-    onClickCallback();
-    handleClose();
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
-    <Box>
+    <div>
       <AvatarAtom
+        id={avatarId}
         src={avatarSrc}
         alt={avatarAlt}
         size={avatarSize}
-        onClick={handleClick}
-        aria-controls={open ? 'user-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-        sx={{ cursor: 'pointer' }}
+        onClick={toggleMenu}
+        style={{ cursor: 'pointer' }} // Replaced sx prop
       >
         {avatarChildren}
       </AvatarAtom>
-      <Menu
+      <md-menu
         id="user-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          'aria-labelledby': 'user-avatar-button', // Assuming AvatarAtom could have an id
-        }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        anchor={avatarId}
+        open={menuOpen}
+        onClosed={closeMenu}
+        anchor-corner="bottom-end"
+        menu-corner="top-end"
       >
         {options.map((option, index) => (
-          <MenuItem
+          <md-menu-item
             key={option.label || index}
-            onClick={() => handleMenuItemClick(option.onClick)}
-            disabled={option.disabled} // Allow disabling menu items
+            headline={option.label}
+            disabled={option.disabled || false}
+            onClick={() => {
+              if (option.onClick) {
+                option.onClick();
+              }
+              closeMenu();
+            }}
           >
             {option.icon && (
-              <ListItemIcon>
-                <IconAtom icon={option.icon} size="small" />
-              </ListItemIcon>
+              <IconAtom icon={option.icon} slot="start" size="small" />
             )}
-            <ListItemText primary={option.label} />
-          </MenuItem>
+          </md-menu-item>
         ))}
-      </Menu>
-    </Box>
+      </md-menu>
+    </div>
   );
 };
 

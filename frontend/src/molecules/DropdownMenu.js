@@ -1,32 +1,33 @@
-import React, { useState } from 'react';
-import { Menu, MenuItem, IconButton } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import React, { useState, useId } from 'react';
+import '@material/web/menu/menu.js';
+import '@material/web/menu/menu-item.js';
+import '@material/web/iconbutton/icon-button.js';
+import '@material/web/icon/icon.js';
 
 const DropdownMenu = ({ options = [] }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const buttonId = useId();
 
-  const handleOpen = (event) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+  const handleToggleMenu = () => setMenuOpen(!menuOpen);
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
-      <IconButton size="small" onClick={handleOpen}>
-        <MoreVertIcon />
-      </IconButton>
-      <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+      <md-icon-button id={buttonId} onClick={handleToggleMenu}>
+        <md-icon>more_vert</md-icon>
+      </md-icon-button>
+      <md-menu anchor={buttonId} open={menuOpen} onClosed={closeMenu}>
         {options.map((option, index) => (
-          <MenuItem
+          <md-menu-item
             key={index}
+            headline={option.label}
             onClick={() => {
-              handleClose();
               option.onClick && option.onClick();
+              closeMenu();
             }}
-          >
-            {option.label}
-          </MenuItem>
+          />
         ))}
-      </Menu>
+      </md-menu>
     </>
   );
 };

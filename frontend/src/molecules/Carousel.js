@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import '@material/web/iconbutton/icon-button.js';
+import '@material/web/icon/icon.js';
 
 const Carousel = ({ items }) => {
   const [index, setIndex] = useState(0);
@@ -13,39 +9,38 @@ const Carousel = ({ items }) => {
   const next = () => setIndex((index + 1) % items.length);
 
   return (
-    <Box sx={{ position: 'relative', overflow: 'hidden' }}>
-      <Box sx={{ display: 'flex', transition: 'transform 0.3s', transform: `translateX(-${index * 100}%)` }}>
+    <div style={{ position: 'relative', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', transition: 'transform 0.3s ease-in-out', transform: `translateX(-${index * 100}%)` }}>
         {items.map((item, i) => (
-          <Box key={i} sx={{ minWidth: '100%' }}>
+          <div key={i} style={{ minWidth: '100%' }}>
             {item}
-          </Box>
+          </div>
         ))}
-      </Box>
+      </div>
       {items.length > 1 && (
         <>
-          <IconButton size="small" onClick={prev} sx={{ position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)' }}>
-            <ArrowBackIosNewIcon fontSize="small" />
-          </IconButton>
-          <IconButton size="small" onClick={next} sx={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)' }}>
-            <ArrowForwardIosIcon fontSize="small" />
-          </IconButton>
-          <Box sx={{ display: 'flex', justifyContent: 'center', position: 'absolute', bottom: 8, left: 0, right: 0 }}>
+          <md-icon-button onClick={prev} style={{ position: 'absolute', top: '50%', left: 0, transform: 'translateY(-50%)' }}>
+            <md-icon style={{'--md-icon-size': '20px'}}>arrow_back_ios</md-icon>
+          </md-icon-button>
+          <md-icon-button onClick={next} style={{ position: 'absolute', top: '50%', right: 0, transform: 'translateY(-50%)' }}>
+            <md-icon style={{'--md-icon-size': '20px'}}>arrow_forward_ios</md-icon>
+          </md-icon-button>
+          <div style={{ display: 'flex', justifyContent: 'center', position: 'absolute', bottom: '8px', left: 0, right: 0 }}>
             {items.map((_, i) => (
               i === index ? (
-                <RadioButtonCheckedIcon key={i} fontSize="small" sx={{ mx: 0.25 }} />
+                <md-icon key={i} style={{ margin: '0 2px', '--md-icon-size': '20px' }}>radio_button_checked</md-icon>
               ) : (
-                <RadioButtonUncheckedIcon
+                <md-icon
                   key={i}
-                  fontSize="small"
-                  sx={{ mx: 0.25, cursor: 'pointer' }}
+                  style={{ margin: '0 2px', cursor: 'pointer', '--md-icon-size': '20px' }}
                   onClick={() => setIndex(i)}
-                />
+                >radio_button_unchecked</md-icon>
               )
             ))}
-          </Box>
+          </div>
         </>
       )}
-    </Box>
+    </div>
   );
 };
 
