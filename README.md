@@ -67,3 +67,29 @@ The frontend follows Atomic Design principles:
  - `src/templates`: Common page layouts, such as `Page`, that leverage `AppCard` for consistent surfaces.
  - `src/pages`: Concrete pages built from templates and molecules.
  - `src/components`: Shared layout components.
+
+## Running with Docker Compose
+
+This project can be run using Docker Compose, which will build and manage both the frontend and backend services.
+
+### Prerequisites
+
+- Docker installed (https://www.docker.com/get-started)
+- Docker Compose installed (usually comes with Docker Desktop, or can be installed separately: https://docs.docker.com/compose/install/)
+
+### Running the Application
+
+1.  Clone the repository (if you haven't already).
+2.  Navigate to the root directory of the project.
+3.  To build and start all services, run:
+    ```bash
+    npm run docker:dev
+    ```
+    Alternatively, you can use Docker Compose directly:
+    ```bash
+    docker-compose up --build
+    ```
+4.  The frontend will be accessible at `http://localhost:80` (or `http://localhost` if port 80 is the default).
+5.  The backend API will be accessible at `http://localhost:3001`.
+
+To stop the services, you can press `Ctrl+C` in the terminal where Docker Compose is running, or run `docker-compose down` from another terminal in the project root.
