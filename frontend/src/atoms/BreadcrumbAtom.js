@@ -44,9 +44,9 @@ const BreadcrumbAtom = ({
     listStyle: 'none',
     padding: 0,
     margin: 0,
-    fontFamily: 'var(--mwc-theme-font-family, Inter, sans-serif)',
-    fontSize: '0.875rem', // Similar to MUI default
-    color: 'var(--mwc-theme-on-surface-variant, #6D7175)',
+    fontFamily: 'var(--md-sys-typescale-label-large-font-family, Inter, sans-serif)',
+    fontSize: 'var(--md-sys-typescale-label-large-font-size, 0.875rem)', // Similar to MUI default
+    color: 'var(--md-sys-color-on-surface-variant)',
     ...style,
   };
 
@@ -57,7 +57,7 @@ const BreadcrumbAtom = ({
 
   // Style for items that are not the separator, to ensure consistent color if children are just text
   const itemContentStyle = {
-     color: 'var(--mwc-theme-on-surface-variant, #6D7175)',
+     color: 'var(--md-sys-color-on-surface-variant)',
   };
 
   // Last item should have primary color if it's the current page (common pattern)
@@ -73,7 +73,7 @@ const BreadcrumbAtom = ({
 
           let itemStyle = itemContentStyle;
           if (isLastItem && !isEllipsis) {
-            itemStyle = {...itemStyle, color: 'var(--mwc-theme-primary, #5C6AC4)'};
+            itemStyle = {...itemStyle, color: 'var(--md-sys-color-primary)'};
           }
 
           return (

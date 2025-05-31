@@ -8,35 +8,38 @@ const BadgeAtom = ({
   children,
   style, // Allow parent to pass custom styles
   className, // Allow parent to pass custom classes
+  showZero = false,
   ...props
 }) => {
   const getBackgroundColor = () => {
     switch (color) {
       case 'primary':
-        return 'var(--mwc-theme-primary, #6200ee)';
+        return 'var(--md-sys-color-primary)';
       case 'secondary':
-        return 'var(--mwc-theme-secondary, #018786)';
+        return 'var(--md-sys-color-secondary)';
       case 'error':
-        return 'var(--mwc-theme-error, #b00020)';
+        return 'var(--md-sys-color-error)';
       default: // 'default' or any other value
-        return 'var(--mwc-theme-surface-variant, #e0e0e0)'; // Or a grey color
+        return 'var(--md-sys-color-tertiary)';
     }
   };
 
   const getTextColor = () => {
     switch (color) {
       case 'primary':
+        return 'var(--md-sys-color-on-primary)';
       case 'secondary':
+        return 'var(--md-sys-color-on-secondary)';
       case 'error':
-        return 'var(--mwc-theme-on-primary, #ffffff)'; // Assuming dark backgrounds for these
+        return 'var(--md-sys-color-on-error)';
       default:
-        return 'var(--mwc-theme-on-surface-variant, #000000)'; // Assuming light background for default
+        return 'var(--md-sys-color-on-tertiary)';
     }
   };
 
   const displayedContent = variant === 'dot' ? '' : (badgeContent > max ? `${max}+` : badgeContent);
   const isZero = badgeContent === 0 && variant === 'standard';
-  const isHidden = isZero && !props.showZero; // MUI's showZero prop, implement if needed
+  const isHidden = isZero && !showZero; // MUI's showZero prop, implement if needed
 
   if (isHidden) {
     return <>{children}</>;
@@ -59,7 +62,7 @@ const BadgeAtom = ({
     fontWeight: '500',
     backgroundColor: getBackgroundColor(),
     color: getTextColor(),
-    borderRadius: '10px', // Fully rounded
+    borderRadius: variant === 'dot' ? '50%' : 'var(--md-sys-shape-corner-full)', // Fully rounded
     zIndex: 1, // Above child
     ...(variant === 'dot'
       ? {

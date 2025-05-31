@@ -9,15 +9,15 @@ const DividerAtom = ({
   orientation = 'horizontal',
   variant = 'fullWidth', // 'fullWidth', 'inset', 'middle'
   // textAlign and children props are intentionally omitted as MdDivider does not support them.
-  sx = {}, // sx from props
+  customStyles = {}, // sx from props
   light, // MUI light prop
   ...props // To pass any other valid MdDivider props (e.g., from a library that adds them)
 }) => {
   const style = {
     // Set color from DESIGN_GUIDELINES.md (divider: '#E0E0E0')
     // The 'light' prop from MUI could adjust this, but for now, we use the guideline color.
-    '--md-divider-color': light ? 'rgba(0, 0, 0, 0.08)' : '#E0E0E0', // Example for light, actual light color may vary
-    ...sx, // Spread sx from props, allowing overrides
+    '--md-divider-color': light ? 'var(--md-sys-color-outline-variant)' : 'var(--md-sys-color-outline)', // Example for light, actual light color may vary
+    ...customStyles, // Spread customStyles from props, allowing overrides
   };
 
   // Map MUI variant to MdDivider props

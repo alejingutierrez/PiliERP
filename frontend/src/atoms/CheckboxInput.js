@@ -57,14 +57,12 @@ const CheckboxInput = ({
         id={checkboxId}
         checked={checked} // Ensure this prop is correctly passed and controls the state
         indeterminate={indeterminate}
-        onchange={handleChange} // MWC component's event is `onchange` (lowercase) if not using createComponent's event mapping
                                // However, createComponent maps it to `onChange`, so this should be `onChange`
         onChange={handleChange} // Correctly use the mapped event from createComponent
         disabled={disabled}
         name={name}
         value={value} // Pass value if it's used (e.g. in forms)
         required={required}
-        // aria-labelledby={label ? `${checkboxId}-label` : undefined} // If label is separate and has an ID
         {...props}
       />
       {label && (

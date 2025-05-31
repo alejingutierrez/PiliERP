@@ -1,5 +1,5 @@
 import React from 'react';
-import { MdElevatedCard } from '@material/web/card/md-elevated-card.js';
+import { MWCElevatedCard } from '../mwc_wrappers/MWCElevatedCard';
 import { MdIcon } from '@material/web/icon/md-icon.js';
 import { MdIconButton } from '@material/web/iconbutton/md-icon-button.js';
 
@@ -10,13 +10,13 @@ const AlertAtom = ({
   title,    // Optional title from props
   action,   // Optional: React node for actions
   onClose,  // Optional: function to call when alert is closed
-  sx = {},
+  customStyles = {},
   ...props // To pass any other props
 }) => {
   const getSeverityStyles = () => {
     let iconName = 'info';
-    let backgroundColor = '#2C6ECB'; // Default to info color (secondary.main)
-    let textColor = '#FFFFFF'; // Default contrast text
+    // Default to info color (secondary.main)
+    // Default contrast text
 
     // DESIGN_GUIDELINES.md semantic colors:
     // Success (`success.main`): `#36A269`
@@ -24,27 +24,29 @@ const AlertAtom = ({
     // Error (`error.main`): `#D82C0D`
     // Info: using secondary.main `#2C6ECB`
 
+    let backgroundColor, textColor;
+
     switch (severity) {
       case 'success':
         iconName = 'check_circle';
-        backgroundColor = '#36A269';
-        textColor = '#FFFFFF';
+        backgroundColor = 'var(--custom-color-success)';
+        textColor = 'var(--md-sys-color-on-primary)';
         break;
       case 'warning':
         iconName = 'warning';
-        backgroundColor = '#EEC200';
-        textColor = '#1A1B1C'; // Dark text for yellow background
+        backgroundColor = 'var(--custom-color-warning)';
+        textColor = 'var(--md-sys-color-on-surface)';
         break;
       case 'error':
         iconName = 'error';
-        backgroundColor = '#D82C0D';
-        textColor = '#FFFFFF';
+        backgroundColor = 'var(--md-sys-color-error)';
+        textColor = 'var(--md-sys-color-on-error)';
         break;
       case 'info':
       default:
         iconName = 'info';
-        backgroundColor = '#2C6ECB'; // secondary.main from guidelines
-        textColor = '#FFFFFF';
+        backgroundColor = 'var(--md-sys-color-primary)';
+        textColor = 'var(--md-sys-color-on-primary)';
         break;
     }
     return { iconName, backgroundColor, textColor };
@@ -64,7 +66,7 @@ const AlertAtom = ({
     display: 'flex',
     alignItems: 'flex-start', // Align items to the top for multi-line text
     borderRadius: '10px', // Global border radius
-    ...sx,
+    ...customStyles,
   };
 
   const textContentStyle = {
@@ -85,7 +87,7 @@ const AlertAtom = ({
   };
 
   return (
-    <MdElevatedCard style={cardStyle} {...props}>
+    <MWCElevatedCard style={cardStyle} {...props}>
       <MdIcon style={iconStyle}>{iconName}</MdIcon>
       <div style={textContentStyle}>
         {title && <div style={titleStyle}>{title}</div>}
@@ -97,7 +99,7 @@ const AlertAtom = ({
           <MdIcon>close</MdIcon>
         </MdIconButton>
       )}
-    </MdElevatedCard>
+    </MWCElevatedCard>
   );
 };
 
